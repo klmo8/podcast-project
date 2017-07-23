@@ -1,0 +1,65 @@
+{% extends 'basemod.html' %}
+
+{% block jumbo %}
+<h1>Add a Podcast</h1>
+{% endblock jumbo %}
+
+{% block sidebar %}
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+  <div class="list-group">
+    <a href="#" class="list-group-item active">Link</a>
+    <a href="#" class="list-group-item">Back to Details</a>
+    <a href="#" class="list-group-item">Add a Podcast</a>
+    <a href="#" class="list-group-item">Delete a Podcast</a>
+    <a href="#" class="list-group-item">Link</a>
+    <a href="#" class="list-group-item">Link</a>
+    <a href="#" class="list-group-item">Link</a>
+  </div>
+</div>
+{% endblock sidebar %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="form">
+      <div class="form-group">
+        <label for="example-url-input" class="col-2 col-form-label">Podcast Image URL</label>
+        <div class="col-10">
+          <input class="form-control" type="url" value="" id="example-url-input">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="example-url-input" class="col-2 col-form-label">URL to Favorite Episode</label>
+        <div class="col-10">
+          <input class="form-control" type="url" value="" id="example-url-input">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleTextarea">Description of Favorite Episode</label>
+        <textarea class="form-control" id="inputDescription" rows="3"></textarea>
+      </div>
+      <span class="input-group-btn">
+       <button class="btn btn-default" type="button">Submit</button>
+      </span>
+    </div>
+
+  </div>
+</div>
+
+<h3>Saved Clips: </h3>
+  <div class="well">
+    <ul>
+      <li><a href="#">Add a Clip</a></li>
+      <li><a href="#">Add a Clip</a></li>
+      <li><a href="#">Add a Clip</a></li>
+    </ul>
+  </div>
+<h3>Related Content: </h3>
+  <div class="well">
+    <ul>
+      <li><a href="#">Add a Link to Related Content</a></li>
+      <li><a href="#">Add a Link to Shownotes</a></li>
+      <li><a href="#">Add a Link to Other</a></li>
+    </ul>
+  </div>
+{% endblock content %}

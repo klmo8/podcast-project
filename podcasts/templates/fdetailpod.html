@@ -1,0 +1,49 @@
+{% extends 'basemod.html' %}
+
+{% block jumbo %}
+<h1>Explore a Recommended Podcast</h1>
+{% endblock jumbo %}
+
+{% block sidebar %}
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+  <div class="list-group">
+    <a href="#" class="list-group-item active">Link</a>
+    <a href="#" class="list-group-item">Add Podcast to Your List</a>
+    <a href="#" class="list-group-item">Like This Recommendation</a>
+    <a href="#" class="list-group-item">Recommend to a Friend</a>
+    <a href="#" class="list-group-item">Link</a>
+    <a href="#" class="list-group-item">Link</a>
+    <a href="#" class="list-group-item">Link</a>
+  </div>
+</div>
+{% endblock sidebar %}
+
+
+{% block content %}
+<h3><a href="#">Visit This Podcast's Webpage</a></h3>
+<h3><a href="#">Add Podcast to Your Personal List</a></h3>
+
+<div class="float left">
+  <img src="http://via.placeholder.com/150x150" alt="Podcast Logo">
+</div>
+<h3>Favorite Episode: </h3>
+  <div class="well">Podcast</div>
+<h3>Description of Favorite Episode: </h3>
+  <div class="well">Favorite Description</div>
+<h3>Saved Clips: </h3>
+  <div class="well">
+    <ul>
+      <li>List items here</li>
+      <li>List items here</li>
+      <li>List items here</li>
+    </ul>
+  </div>
+<h3>Related Content: </h3>
+  <div class="well">
+    <ul>
+      <li>Links: </li>
+      <li>Saved Shownotes: </li>
+      <li>Other: </li>
+    </ul>
+  </div>
+{% endblock content %}
