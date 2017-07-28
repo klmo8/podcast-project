@@ -1,7 +1,7 @@
 {% extends 'basemod.html' %}
 
 {% block jumbo %}
-<h1>Details for {{ object_list }}</h1>
+<h1>Details for {{ object.title }}</h1>
 {% endblock jumbo %}
 
 
@@ -21,18 +21,30 @@
 
 {% block content %}
 <div class="float left">
-  <img src="http://via.placeholder.com/150x150" alt="Podcast Logo">
+  <img class="pod-logo" src="{{ object.logo }}" alt="Podcast Logo">
 </div>
+<h3>Description: </h3>
+  <div class="well">{{ object.description }}</div>
 <h3>Favorite Episode: </h3>
-  <div class="well">Podcast</div>
-<h3>Description of Favorite Episode: </h3>
-  <div class="well">Favorite Description</div>
+  <div class="well">{{ object.favorite_episode }}</div>
 <h3>Saved Clips: </h3>
   <div class="well">
     <ul>
-      <li>List items here</li>
-      <li>List items here</li>
-      <li>List items here</li>
+      {% if object.saved_clips1 != None %}
+        <li>{{ object.saved_clips1 }}</li>
+        {% else %}
+          <li><a href="#">Add a saved clip</a></li>
+      {% endif %}
+        {% if object.saved_clips2 != None %}
+          <li>{{ object.saved_clips2 }}</li>
+          {% else %}
+            <li><a href="#">Add a saved clip</a></li>
+        {% endif %}
+          {% if object.saved_clips3 != None %}
+            <li>{{ object.saved_clips3 }}</li>
+            {% else %}
+              <li><a href="#">Add a saved clip</a></li>
+          {% endif %}
     </ul>
   </div>
 <h3>Related Content: </h3>

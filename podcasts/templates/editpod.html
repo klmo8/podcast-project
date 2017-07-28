@@ -1,7 +1,7 @@
 {% extends 'basemod.html' %}
 
 {% block jumbo %}
-<h1>Edit Details for Podcast</h1>
+<h1>Edit Details for {{ object.title }}</h1>
 {% endblock jumbo %}
 
 {% block sidebar %}
@@ -24,49 +24,42 @@
     <div class="float left">
       <img src="http://via.placeholder.com/150x150" alt="Podcast Logo">
     </div>
-    <div class="form-group">
-      <label for="example-url-input" class="col-2 col-form-label">Update Podcast Image</label>
-      <div class="col-10">
-        <input class="form-control" type="url" value="" id="example-url-input">
-      </div>
-      <span class="input-group-btn">
-       <button class="btn btn-default" type="button">Submit</button>
-      </span>
-    </div>
-    <div class="form-group">
-      <label for="example-url-input" class="col-2 col-form-label">Update Favorite Episode</label>
-      <div class="col-10">
-        <input class="form-control" type="url" value="" id="example-url-input">
-      </div>
-      <span class="input-group-btn">
-       <button class="btn btn-default" type="button">Submit</button>
-      </span>
-    </div>
-    <div class="form-group">
-      <label for="exampleTextarea">Update Description of Favorite Episode</label>
-      <textarea class="form-control" id="inputDescription" rows="3"></textarea>
-      <span class="input-group-btn">
-       <button class="btn btn-default" type="button">Submit</button>
-      </span>
-    </div>
+    <div class="form">
+      <form method="post" role="form"> {% csrf_token %}
+        <div class="form-group">
+          <label>Update Description</label>
+          <textarea class="form-control" rows="3" name="description"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="col-2 col-form-label">Update URL</label>
+          <div class="col-10">
+            <input class="form-control" type="url" value="{{ object.url|default:"" }}" name="url">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-2 col-form-label">Update Favorite Episode</label>
+          <div class="col-10">
+            <input class="form-control" type="url" value="{{ object.favorite_episode|default:"" }}" name="favorite_episode">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-2 col-form-label">Update Saved Clip</label>
+          <div class="col-10">
+            <input class="form-control" type="url" value="{{ object.saved_clips1|default:"" }}" name="saved_clips1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-2 col-form-label">Update Shownotes</label>
+          <div class="col-10">
+            <input class="form-control" type="url" value="{{ object.shownotes|default:"" }}" name="shownotes">
+          </div>
+        </div>
 
+        <span class="input-group-btn">
+         <button class="btn btn-default" type="submit">Submit</button>
+        </span>
+      </form>
+    </div>
   </div>
 </div>
-
-<h3>Saved Clips: </h3>
-  <div class="well">
-    <ul>
-      <li>list items here | <a href="#">Edit</a></li>
-      <li>list items here | <a href="#">Edit</a></li>
-      <li>list items here | <a href="#">Edit</a></li>
-    </ul>
-  </div>
-<h3>Related Content: </h3>
-  <div class="well">
-    <ul>
-      <li>Links: | <a href="#">Edit</a></li>
-      <li>Saved Shownotes: | <a href="#">Edit</a></li>
-      <li>Other: | <a href="#">Edit</a></li>
-    </ul>
-  </div>
 {% endblock content %}

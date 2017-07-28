@@ -5,3 +5,8 @@ body {
 .jumbotron {
   color: blue;
 }
+
+.pod-logo {
+  width: 150px;
+  height: 150px;
+}

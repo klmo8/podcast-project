@@ -16,16 +16,16 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from podcasts.views import *
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, DetailView, ListView, CreateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # "as_view()" is a method that creates an instance of this class
-    url(r'^podcom/$', PodcastList.as_view()),
-    url(r'^podcom/details/(?P<slug>\w+)/$', PodcastDetail.as_view(template_name='detailpod.html')),
-    url(r'^podcom/add/$', TemplateView.as_view(template_name='addpod.html')),
+    url(r'^podcom/$', PodcastListView.as_view(), name='dashboard'),
+    url(r'^podcom/details/(?P<pk>\d+)/', PodcastDetailView.as_view(template_name='detailpod.html')),
+    url(r'^podcom/add/$', PodcastAddView.as_view()),
     url(r'^podcom/delete/$', TemplateView.as_view(template_name='deletepod.html')),
-    url(r'^podcom/details/edit$', TemplateView.as_view(template_name='editpod.html')),
+    url(r'^podcom/details/edit/(?P<pk>\d+)/$', PodcastUpdateView.as_view()),
     url(r'^podcom/mycom/$', TemplateView.as_view(template_name='friends.html')),
     url(r'^podcom/mycom/viewfriend/$', TemplateView.as_view(template_name='friendpage.html')),
     url(r'^podcom/mycom/add/$', TemplateView.as_view(template_name='addfriend.html')),

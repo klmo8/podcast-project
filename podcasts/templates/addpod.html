@@ -22,44 +22,47 @@
 <div class="row">
   <div class="col-md-6">
     <div class="form">
-      <div class="form-group">
-        <label for="example-url-input" class="col-2 col-form-label">Podcast Image URL</label>
-        <div class="col-10">
-          <input class="form-control" type="url" value="" id="example-url-input">
+      <form method="post" role="form"> {% csrf_token %}
+        <div class="form-group">
+          <label class="col-2 col-form-label">Title</label>
+          <div class="col-10">
+            <input class="form-control" type="text" value="" name="title">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="example-url-input" class="col-2 col-form-label">URL to Favorite Episode</label>
-        <div class="col-10">
-          <input class="form-control" type="url" value="" id="example-url-input">
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="form-control" rows="3" name="description"></textarea>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="exampleTextarea">Description of Favorite Episode</label>
-        <textarea class="form-control" id="inputDescription" rows="3"></textarea>
-      </div>
-      <span class="input-group-btn">
-       <button class="btn btn-default" type="button">Submit</button>
-      </span>
-    </div>
+        <div class="form-group">
+          <label class="col-2 col-form-label">URL</label>
+          <div class="col-10">
+            <input class="form-control" type="url" value="" name="url">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-2 col-form-label">Favorite Episode</label>
+          <div class="col-10">
+            <input class="form-control" type="url" value="" name="favorite_episode">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-2 col-form-label">Saved Clip</label>
+          <div class="col-10">
+            <input class="form-control" type="url" value="" name="saved_clips1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-2 col-form-label">Link to Shownotes</label>
+          <div class="col-10">
+            <input class="form-control" type="url" value="" name="shownotes">
+          </div>
+        </div>
 
+        <span class="input-group-btn">
+         <button class="btn btn-default" type="submit">Submit</button>
+        </span>
+      </form>
+    </div>
   </div>
 </div>
-
-<h3>Saved Clips: </h3>
-  <div class="well">
-    <ul>
-      <li><a href="#">Add a Clip</a></li>
-      <li><a href="#">Add a Clip</a></li>
-      <li><a href="#">Add a Clip</a></li>
-    </ul>
-  </div>
-<h3>Related Content: </h3>
-  <div class="well">
-    <ul>
-      <li><a href="#">Add a Link to Related Content</a></li>
-      <li><a href="#">Add a Link to Shownotes</a></li>
-      <li><a href="#">Add a Link to Other</a></li>
-    </ul>
-  </div>
 {% endblock content %}

@@ -10,6 +10,8 @@ class Podcast(models.Model):
     saved_clips1 =      models.URLField(null=True, blank=True)
     saved_clips2 =      models.URLField(null=True, blank=True)
     saved_clips3 =      models.URLField(null=True, blank=True)
+    shownotes =         models.URLField(null=True, blank=True)
+
 
     def __str__(self):
-        return '%s' % (self.title)
+        return '%s %s' % (self.title, self.id)

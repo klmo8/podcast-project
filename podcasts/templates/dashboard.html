@@ -7,14 +7,16 @@
 
 <div class="row">
 {% block podlist %}
-{% for obj in object_list %}
-  <div class="col-xs-6 col-lg-4">
-    <h2>{{ obj.title }}</h2>
-    <p>{{ obj.description }}</p>
+<div class="col-xs-12">
+{% for pod in podcast_list %}
+    <h2>{{ pod.title }}</h2>
+    <p>{{ pod.description }}</p>
     <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-  </div><!--/.col-xs-6.col-lg-4-->
 {% endfor %}
+</div><!--/.col-xs-6.col-lg-4-->
+
 {% endblock podlist %}
+
 </div>
 
 

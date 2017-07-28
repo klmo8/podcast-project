@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from .models import Podcast
+from .forms import PodcastAddForm, PodcastUpdateForm
 
 
 class DashboardView(TemplateView):
@@ -19,7 +20,7 @@ class DashboardView(TemplateView):
         print(context)
         return context
 
-class PodcastList(ListView):
+class PodcastListView(ListView):
     template_name = 'dashboard.html'
 
     def get_queryset(self):
@@ -27,11 +28,26 @@ class PodcastList(ListView):
         print(self.kwargs)
         return queryset
 
-class PodcastDetail(ListView):
+class PodcastDetailView(DetailView):
     template_name = 'detailpod.html'
 
-    def get_queryset(self):
-        slug = self.kwargs.get("slug")
-        podcastQuery = Podcast.objects.get(title__iexact=slug)
-        print(podcastQuery)
-        return podcastQuery
+    # This is required because it is only with this queryset that we can get the appropriate context_data using the method below
+    # It seems like it needs the queryset to match the context_data to grab
+    queryset = Podcast.objects.all()
+
+    def get_object(self, *args, **kwargs):
+        pk = self.kwargs.get("pk")
+        obj = get_object_or_404(Podcast, id=pk)
+        return obj
+
+class PodcastAddView(CreateView):
+    form_class = PodcastAddForm
+    template_name = 'addpod.html'
+    success_url = '/podcom/'
+
+class PodcastUpdateView(UpdateView):
+    form_class = PodcastUpdateForm
+    template_name = 'editpod.html'
+    success_url = '/podcom/'
+
+    queryset = Podcast.objects.all()
