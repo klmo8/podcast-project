@@ -19,6 +19,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'offcanvas.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'customdash.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Kanit" rel="stylesheet">
   </head>
 
   <body>
@@ -35,9 +36,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Friends</a></li>
+            <li class="active"><a href="{% url 'dashboard_with_pk' pk=user.pk %}">Home</a></li>
+            <li><a href="{% url 'userlist' %}">Users</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
@@ -48,9 +48,9 @@
       <div class="row row-offcanvas row-offcanvas-right">
 
         <div class="col-xs-12 col-sm-9">
-          <p class="pull-right visible-xs">
+          <!-- <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-          </p>
+          </p> -->
           <div class="jumbotron">
             {% block jumbo %}
             {% endblock jumbo %}
@@ -63,19 +63,23 @@
 
         </div><!--/.col-xs-12.col-sm-9-->
 
-      {% block sidebar %}
-      {% endblock sidebar %}
+      <div class="row">
+        {% block sidebar %}
+        {% endblock sidebar %}
+      </div>
 
-      {% block content %}
-      {% endblock content %}
+      <div class="row">
+        {% block content %}
+        {% endblock content %}
+      </div>
 
       <hr>
 
       <footer>
         <p>&copy; 2016 Company, Inc.</p>
       </footer>
-
-    </div><!--/.container-->
+    </div>
+  </div><!--/.container-->
 
 
     <!-- Bootstrap core JavaScript

@@ -1,9 +1,11 @@
 body {
-  background-image: url('gradient-red-simple-background-705766-2048x1536.jpg');
+  /*background-image: url('gradient-red-simple-background-705766-2048x1536.jpg');*/
+  background-color: #F63;
 }
 
 .jumbotron {
-  color: blue;
+  /*font-family: 'Alfa Slab One', cursive;*/
+  font-family: 'Kanit', sans-serif;
 }
 
 .pod-logo {

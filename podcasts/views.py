@@ -1,10 +1,17 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
-from .models import Podcast
-from .forms import PodcastAddForm, PodcastUpdateForm
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import *
+from .forms import *
 
+class RegisterView(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'registration/register.html'
+    #TODO: redirect to homepage instead, then send user confirmation email.
+    success_url = '/podcom/'
 
 class DashboardView(TemplateView):
     # Adding args and kwargs to the get call allows us to print, modify, work with the arguments that are passed through the URL.
@@ -20,15 +27,25 @@ class DashboardView(TemplateView):
         print(context)
         return context
 
-class PodcastListView(ListView):
+class PodcastListViewPK(LoginRequiredMixin, ListView):
+    template_name = 'dashboard_with_pk.html'
+
+    def get_queryset(self):
+        pk = self.kwargs.get("pk")
+        queryset = Podcast.objects.filter(user=pk)
+        return queryset
+
+class PodcastListView(LoginRequiredMixin, ListView):
     template_name = 'dashboard.html'
 
     def get_queryset(self):
-        queryset = Podcast.objects.all()
+        # print(self.request.user)
+        # queryset = Podcast.objects.all()
+        queryset = Podcast.objects.filter(user=self.request.user)
         print(self.kwargs)
         return queryset
 
-class PodcastDetailView(DetailView):
+class PodcastDetailView(LoginRequiredMixin, DetailView):
     template_name = 'detailpod.html'
 
     # This is required because it is only with this queryset that we can get the appropriate context_data using the method below
@@ -40,14 +57,58 @@ class PodcastDetailView(DetailView):
         obj = get_object_or_404(Podcast, id=pk)
         return obj
 
-class PodcastAddView(CreateView):
+class PodcastAddView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     form_class = PodcastAddForm
     template_name = 'addpod.html'
     success_url = '/podcom/'
 
-class PodcastUpdateView(UpdateView):
+
+    # Saves the valid form with the current user being associated with the saved form data.
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        #LoginRequiredMixin ensures that this is a valid/logged-in user.
+        instance.user = self.request.user
+        return super(PodcastAddView, self).form_valid(form)
+
+class PodcastUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PodcastUpdateForm
     template_name = 'editpod.html'
     success_url = '/podcom/'
 
     queryset = Podcast.objects.all()
+
+    # saves the valid form with the current user being associated with the saved form data
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        return super(PodcastUpdateView, self).form_valid(form)
+
+class PodcastDeleteView(LoginRequiredMixin, DeleteView):
+    form_class = PodcastDeleteForm
+    template_name = 'deletepod.html'
+    success_url = '/podcom/'
+
+    queryset = Podcast.objects.all()
+
+    # saves the valid form with the current user being associated with the saved form data
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        return super(PodcastDeleteView, self).form_valid(form)
+
+class UserListView(ListView):
+    template_name = 'users.html'
+
+    def get_queryset(self):
+        queryset = User.objects.all()
+        # queryset = class_instance.model_set.all()
+        for query in queryset:
+            print(query)
+        return queryset
+
+
+# class LoginView(LoginView):
+#     redirect_authenticated_user = True
+#     redirect_field_name = '/podcom/'

@@ -1,7 +1,7 @@
 {% extends 'basemod.html' %}
 
 {% block jumbo %}
-<h1>Delete Podcast</h1>
+<h1>Delete {{ object.title }}</h1>
 {% endblock jumbo %}
 
 {% block sidebar %}
@@ -21,17 +21,32 @@
 
 {% block content %}
 
-<div class="row">
-  <div class="col-md-6">
-    <h5>Which podcast would you like to delete?</h5>
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Podcast">
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" type="button">Delete</button>
-        </span>
-      </div>
+<div class="row row-offcanvas row-offcanvas-right">
+  <div class="col-xs-12 col-sm-9" align="center">
+    <div class="form">
+      <form method="post" role="form"> {% csrf_token %}
+        <div class="form-group">
+          <label class="col-2 col-form-label"><h3>Are you sure you want to delete this podcast?</h3></label>
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="submit">Yes</button>
+            </span>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+
+<!-- <div class="row">
+  <div class="col-md-6">
+    <h5>Are you sure you want to delete {{ object.title }}?</h5>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button">Yes</button>
+        </span>
+      </div>
+  </div>
+</div> -->
+
 
 {% endblock content %}

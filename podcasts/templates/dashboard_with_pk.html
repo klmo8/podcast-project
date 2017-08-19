@@ -16,14 +16,12 @@
         <p><a class="btn btn-default" href="{% url 'details_with_pk' pk=pod.pk %}" role="button">View details &raquo;</a></p>
     {% endfor %}
   {% else %}
-    <p><a class="btn btn-default" href="{% url 'addpodcast' %}" role="button">Add a Podcast &raquo;</a></p>
+  <p><a class="btn btn-default" href="{% url 'addpodcast' %}" role="button">Add a Podcast &raquo;</a></p>
+  <!-- <h2>This user has not added any podcasts to their favorites list yet.</h2> -->
   {% endif %}
 </div><!--/.col-xs-6.col-lg-4-->
-
 {% endblock podlist %}
-
 </div>
-
 
 
 {% block sidebar %}

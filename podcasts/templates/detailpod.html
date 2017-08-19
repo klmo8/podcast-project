@@ -20,39 +20,28 @@
 {% endblock sidebar %}
 
 {% block content %}
-<div class="float left">
-  <img class="pod-logo" src="{{ object.logo }}" alt="Podcast Logo">
-</div>
-<h3>Description: </h3>
+{% if object.logo %}
+  <div class="float left">
+    <img class="pod-logo" src="{{ object.logo }}" alt="Podcast Logo">
+  </div>
+{% endif %}
+{% if object.url %}
+  <h3>Podcast Homepage</h3>
+  <div class="well"><a href="{{ object.url }}"/>{{ object.url }}</a></div>
+{% endif %}
+<h3>Description</h3>
   <div class="well">{{ object.description }}</div>
-<h3>Favorite Episode: </h3>
-  <div class="well">{{ object.favorite_episode }}</div>
-<h3>Saved Clips: </h3>
-  <div class="well">
-    <ul>
-      {% if object.saved_clips1 != None %}
-        <li>{{ object.saved_clips1 }}</li>
-        {% else %}
-          <li><a href="#">Add a saved clip</a></li>
-      {% endif %}
-        {% if object.saved_clips2 != None %}
-          <li>{{ object.saved_clips2 }}</li>
-          {% else %}
-            <li><a href="#">Add a saved clip</a></li>
-        {% endif %}
-          {% if object.saved_clips3 != None %}
-            <li>{{ object.saved_clips3 }}</li>
-            {% else %}
-              <li><a href="#">Add a saved clip</a></li>
-          {% endif %}
-    </ul>
-  </div>
-<h3>Related Content: </h3>
-  <div class="well">
-    <ul>
-      <li>Links: </li>
-      <li>Saved Shownotes: </li>
-      <li>Other: </li>
-    </ul>
-  </div>
+{% if object.favorite_episode %}
+<h3>Favorite Episode</h3>
+  <div class="well"><a href="{{ object.favorite_episode }}"/>{{ object.favorite_episode }}</a></div>
+{% endif %}
+{% if object.saved_clip %}
+<h3>Saved Clip</h3>
+  <div class="well"><a href="{{ object.saved_clip }}"/>{{ object.saved_clip }}</a></div>
+{% endif %}
+{% if object.shownotes %}
+<h3>Shownotes</h3>
+  <div class="well"><a href="{{ object.shownotes }}"/>{{ object.shownotes }}</a></div>
+{% endif %}
+
 {% endblock content %}

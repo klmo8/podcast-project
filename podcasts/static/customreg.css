@@ -5,9 +5,13 @@ body {
 
 .jumbotron {
   /*font-family: 'Alfa Slab One', cursive;*/
-  font-family: 'Kanit', sans-serif;
+  visibility: hidden;
 }
 
 #sidebar {
-  display: none;
+  visibility: hidden;
 }
+
+/*.regform {
+  float: right;
+}*/
