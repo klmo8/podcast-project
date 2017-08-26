@@ -13,13 +13,14 @@ class RegisterView(CreateView):
     #TODO: redirect to homepage instead, then send user confirmation email.
     success_url = '/podcom/'
 
+# Not currently being routed (see PodcastListView instead).
 class DashboardView(TemplateView):
     # Adding args and kwargs to the get call allows us to print, modify, work with the arguments that are passed through the URL.
     # Example: PodCom/MyCom/<userID> and we can now access <userID> directly.
     # def get(self, request, *args, **kwargs):
     #     context = {}
     #     return render(request, "dashboard.html", {})
-    template_name = 'dashboard.html'
+    template_name = 'podcasts/dashboard.html'
 
     def get_context_data(self, *args, **kwargs):
         # Gets the context that is being passed by default to this view.
@@ -28,7 +29,9 @@ class DashboardView(TemplateView):
         return context
 
 class PodcastListViewPK(LoginRequiredMixin, ListView):
-    template_name = 'dashboard_with_pk.html'
+    template_name = 'podcasts/dashboard_with_pk.html'
+    redirect_field_name = 'redirect_to'
+
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
@@ -36,7 +39,9 @@ class PodcastListViewPK(LoginRequiredMixin, ListView):
         return queryset
 
 class PodcastListView(LoginRequiredMixin, ListView):
-    template_name = 'dashboard.html'
+    template_name = 'podcasts/dashboard.html'
+    redirect_field_name = 'redirect_to'
+
 
     def get_queryset(self):
         # print(self.request.user)
@@ -46,7 +51,7 @@ class PodcastListView(LoginRequiredMixin, ListView):
         return queryset
 
 class PodcastDetailView(LoginRequiredMixin, DetailView):
-    template_name = 'detailpod.html'
+    template_name = 'podcasts/detailpod.html'
 
     # This is required because it is only with this queryset that we can get the appropriate context_data using the method below
     # It seems like it needs the queryset to match the context_data to grab
@@ -61,7 +66,7 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     form_class = PodcastAddForm
-    template_name = 'addpod.html'
+    template_name = 'podcasts/addpod.html'
     success_url = '/podcom/'
 
 
@@ -74,7 +79,7 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
 
 class PodcastUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PodcastUpdateForm
-    template_name = 'editpod.html'
+    template_name = 'podcasts/editpod.html'
     success_url = '/podcom/'
 
     queryset = Podcast.objects.all()
@@ -87,7 +92,7 @@ class PodcastUpdateView(LoginRequiredMixin, UpdateView):
 
 class PodcastDeleteView(LoginRequiredMixin, DeleteView):
     form_class = PodcastDeleteForm
-    template_name = 'deletepod.html'
+    template_name = 'podcasts/deletepod.html'
     success_url = '/podcom/'
 
     queryset = Podcast.objects.all()
@@ -98,8 +103,8 @@ class PodcastDeleteView(LoginRequiredMixin, DeleteView):
         instance.user = self.request.user
         return super(PodcastDeleteView, self).form_valid(form)
 
-class UserListView(ListView):
-    template_name = 'users.html'
+class UserListView(LoginRequiredMixin, ListView):
+    template_name = 'podcasts/users.html'
 
     def get_queryset(self):
         queryset = User.objects.all()

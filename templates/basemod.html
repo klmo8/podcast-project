@@ -18,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'offcanvas.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'customdash.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'podcasts/custommod.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Kanit" rel="stylesheet">
   </head>
 
@@ -55,31 +55,30 @@
             {% block jumbo %}
             {% endblock jumbo %}
           </div>
-
-          <div class="row">
-          {% block podlist %}
-          {% endblock podlist %}
-          </div>
-
         </div><!--/.col-xs-12.col-sm-9-->
 
-      <div class="row">
-        {% block sidebar %}
-        {% endblock sidebar %}
-      </div>
+        <!-- General Format for Additional Content -->
+        <!-- <div class="row">
+          <div class="col-xs-6 col-lg-4">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          </div>
+        </div><!-->
 
-      <div class="row">
-        {% block content %}
-        {% endblock content %}
-      </div>
+      {% block sidebar %}
+      {% endblock sidebar %}
+
+
+      {% block content %}
+      {% endblock content %}
 
       <hr>
-
       <footer>
         <p>&copy; 2016 Company, Inc.</p>
       </footer>
-    </div>
-  </div><!--/.container-->
+
+    </div><!--/.container-->
 
 
     <!-- Bootstrap core JavaScript
@@ -93,3 +92,15 @@
     <script src="{% static 'offcanvas.js' %}"></script>
   </body>
 </html>
+
+<!-- Optional(?) Header stuff -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<!-- <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->

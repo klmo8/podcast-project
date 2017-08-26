@@ -1,0 +1,15 @@
+{% extends "basereg.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<form method="POST">{% csrf_token %}
+  {{ form|crispy }}
+  <input class="btn btn-primary" type="submit" value="Login">
+</form>
+</br>
+<p>New User? Click below to register now!</p>
+<a class="btn btn-success" href="{% url 'register' %}">Register</a>
+
+
+{% endblock %}

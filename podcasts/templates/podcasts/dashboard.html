@@ -10,18 +10,22 @@
 {% block podlist %}
 <div class="col-xs-12">
   {% if podcast_list %}
-    {% for pod in podcast_list %}
-        <h2>{{ pod.title }}</h2>
-        <p>{{ pod.description }}</p>
-        <p><a class="btn btn-default" href="{% url 'details_with_pk' pk=pod.pk %}" role="button">View details &raquo;</a></p>
-    {% endfor %}
+  {% for pod in podcast_list %}
+      <h2>{{ pod.title|title }}</h2>
+      {% if pod.logo %}
+        <img class="pod-logo" src="{{ pod.logo }}">
+      {% endif %}
+      <p><a class="btn btn-default detailsButton" href="{% url 'details_with_pk' pk=pod.pk %}" role="button">View details &raquo;</a></p>
+  {% endfor %}
   {% else %}
-  <p><a class="btn btn-default" href="{% url 'addpodcast' %}" role="button">Add a Podcast &raquo;</a></p>
-  <!-- <h2>This user has not added any podcasts to their favorites list yet.</h2> -->
+    <p><a class="btn btn-default" href="{% url 'addpodcast' %}" role="button">Add a Podcast &raquo;</a></p>
   {% endif %}
 </div><!--/.col-xs-6.col-lg-4-->
+
 {% endblock podlist %}
+
 </div>
+
 
 
 {% block sidebar %}
@@ -39,9 +43,7 @@
     <a href="#" class="list-group-item">Link</a>
   </div>
 </div> -->
-<div class="col-xs-6 col-sm-3">
-  <img src="{% static 'images/26899.svg' %}">
-</div>
+
 {% endblock sidebar %}
 
 
