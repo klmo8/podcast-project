@@ -67,7 +67,12 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     form_class = PodcastAddForm
     template_name = 'podcasts/addpod.html'
-    success_url = '/podcom/'
+    # success_url = '/podcom/'
+
+    def get_success_url(self):
+        return reverse('dashboard_with_pk', args=(self.request.user.pk,))
+
+
 
 
     # Saves the valid form with the current user being associated with the saved form data.
@@ -75,6 +80,7 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
         instance = form.save(commit=False)
         #LoginRequiredMixin ensures that this is a valid/logged-in user.
         instance.user = self.request.user
+        print(self.request.user.pk)
         return super(PodcastAddView, self).form_valid(form)
 
 class PodcastUpdateView(LoginRequiredMixin, UpdateView):

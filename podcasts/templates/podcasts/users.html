@@ -5,21 +5,15 @@
 {% endblock jumbo %}
 
 {% block sidebar %}
-<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" visibility="hidden">
   <div class="list-group">
-    <a href="#" class="list-group-item active">Link</a>
     <a href="#" class="list-group-item">Add a Friend</a>
-    <a href="#" class="list-group-item">Delete a Friend</a>
-    <a href="#" class="list-group-item">Link</a>
-    <a href="#" class="list-group-item">Link</a>
-    <a href="#" class="list-group-item">Link</a>
-    <a href="#" class="list-group-item">Link</a>
+    <a href="#" class="list-group-item">Find a Friend</a>
+    <a href="#" class="list-group-item active">View Active Users</a>
   </div>
-</div>
 {% endblock sidebar %}
 
 {% block content %}
-<h3>Select User</h3>
+<h3>Select a User to View Shared Podcasts</h3>
   <div class="well">
     <ul>
     {% for obj in object_list %}

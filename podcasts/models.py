@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save
+from django.urls import reverse
+
 
 User = settings.AUTH_USER_MODEL
 
@@ -14,7 +16,7 @@ class Podcast(models.Model):
     # friend =            models.ForeignKey(Friend) #class_instance.model_set.all()
     title =             models.CharField(max_length=120)
     description =       models.CharField(max_length=500)
-    logo =              models.URLField(blank=True, null=True)
+    logo =              models.URLField(blank=False, default="http://via.placeholder.com/170x170")
     favorite_episode =  models.URLField(blank=True)
     url =               models.URLField()
     saved_clip =        models.URLField(blank=True, null=True)
@@ -23,6 +25,7 @@ class Podcast(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.title, self.id)
+
 
 
 def pre_save_receiver(sender, instance, *args, **kwargs):

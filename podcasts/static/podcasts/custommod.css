@@ -12,3 +12,11 @@ body {
   width: 150px;
   height: 150px;
 }
+
+/*#sidebar {
+  visibility: hidden;
+}*/
+
+.crispyform {
+  margin-left: 5px;
+}

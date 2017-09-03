@@ -6,18 +6,15 @@
 
 
 {% block sidebar %}
-<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
   <div class="list-group">
-    <a href="#" class="list-group-item active">Link</a>
-    <a href="#" class="list-group-item">Add a Podcast</a>
-    <a href="#" class="list-group-item">Edit Details</a>
-    <a href="#" class="list-group-item">Delete a Podcast</a>
-    <a href="#" class="list-group-item">Link</a>
-    <a href="#" class="list-group-item">Link</a>
-    <a href="#" class="list-group-item">Link</a>
+    <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
+    <a href="{% url 'editpodcast' pk=user.pk %}" class="list-group-item">Edit Details</a>
+    <a href="#" class="list-group-item">Find a Friend</a>
+    <a href="#" class="list-group-item">Find a Random Podcast</a>
+    <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
   </div>
-</div>
 {% endblock sidebar %}
+"{% url 'details_with_pk' pk=pod.pk %}"
 
 {% block content %}
 {% if object.logo %}
@@ -35,6 +32,7 @@
 <h3>Favorite Episode</h3>
   <div class="well"><a href="{{ object.favorite_episode }}"/>{{ object.favorite_episode }}</a></div>
 {% endif %}
+
 {% if object.saved_clip %}
 <h3>Saved Clip</h3>
   <div class="well"><a href="{{ object.saved_clip }}"/>{{ object.saved_clip }}</a></div>

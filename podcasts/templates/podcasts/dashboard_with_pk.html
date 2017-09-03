@@ -3,28 +3,34 @@
 
 {% block jumbo %}
 <h1>Your Shared Podcasts</h1>
-<p>This is a list of your top shared podcasts. What you see here is what your PodCommunity will see when they visit your page.</p>
+<p>This is a list of your top shared podcasts. What you see here is what other users will see when they visit your page.</p>
 {% endblock jumbo %}
 
+{% block sidebar %}
+  <div class="list-group">
+    <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
+    <a href="#" class="list-group-item">Find a Friend</a>
+    <a href="#" class="list-group-item">Find a Random Podcast</a>
+    <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
+  </div>
+{% endblock sidebar %}
+
+
 {% block content %}
-<div class="col-md-12">
   {% if podcast_list %}
     {% for pod in podcast_list %}
-        <h2>{{ pod.title|title }}</h2>
+    <!-- TODO: find a way to stop these from wrapping! -->
+      <div class="{% cycle "col-md-3 content-left text-center" "col-md-3 content-midl text-center" "col-md-3 content-midr text-center" "col-md-3 content-right text-center" %}">
+        <h4>{{ pod.title|title }}</h4>
         <!-- <p>{{ pod.description }}</p> -->
         {% if pod.logo %}
           <img class="pod-logo" src="{{ pod.logo }}">
         {% endif %}
         <p><a class="btn btn-default detailsButton" href="{% url 'details_with_pk' pk=pod.pk %}" role="button">View details &raquo;</a></p>
+      </div>
     {% endfor %}
   {% else %}
   <p><a class="btn btn-default" href="{% url 'addpodcast' %}" role="button">Add a Podcast &raquo;</a></p>
   <!-- <h2>This user has not added any podcasts to their favorites list yet.</h2> -->
   {% endif %}
-</div><!--/.col-xs-6.col-lg-4-->
 {% endblock content %}
-
-
-{% block sidebar %}
-
-{% endblock sidebar %}

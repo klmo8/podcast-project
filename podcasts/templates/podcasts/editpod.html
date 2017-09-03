@@ -7,22 +7,18 @@
 {% endblock jumbo %}
 
 {% block sidebar %}
-<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-  <div class="list-group">
-    <a href="#" class="list-group-item active">Link</a>
-    <a href="#" class="list-group-item">Back to Details</a>
-    <a href="#" class="list-group-item">Add a Podcast</a>
-    <a href="#" class="list-group-item">Delete a Podcast</a>
-    <a href="#" class="list-group-item">Link</a>
-    <a href="#" class="list-group-item">Link</a>
-    <a href="#" class="list-group-item">Link</a>
-  </div>
+<div class="list-group">
+  <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
+  <a href="#" class="list-group-item active">Edit Details</a>
+  <a href="#" class="list-group-item">Find a Friend</a>
+  <a href="#" class="list-group-item">Find a Random Podcast</a>
+  <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
 </div>
 {% endblock sidebar %}
 
 {% block content %}
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-10 crispyform">
     <form method="POST">{% csrf_token %}
       {{ form|crispy }}
       <!-- {{ form.as_p }} -->

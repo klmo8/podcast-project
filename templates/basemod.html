@@ -23,6 +23,7 @@
   </head>
 
   <body>
+    <!-- NAVBAR -->
     <nav class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
         <div class="navbar-header">
@@ -39,41 +40,39 @@
             <li class="active"><a href="{% url 'dashboard_with_pk' pk=user.pk %}">Home</a></li>
             <li><a href="{% url 'userlist' %}">Users</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="{% url 'logout' %}">Logout</a></li>
+          </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
+    <!-- MAIN CONTENT -->
     <div class="container">
-
-      <div class="row row-offcanvas row-offcanvas-right">
-
-        <div class="col-xs-12 col-sm-9">
+      <div class="row head-row">
           <!-- <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p> -->
-          <div class="jumbotron">
+          <div class="col-xs-8 jumbotron">
             {% block jumbo %}
             {% endblock jumbo %}
           </div>
-        </div><!--/.col-xs-12.col-sm-9-->
 
-        <!-- General Format for Additional Content -->
-        <!-- <div class="row">
-          <div class="col-xs-6 col-lg-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <div class="col-xs-4" id="sidebar">
+            {% block sidebar %}
+            {% endblock sidebar %}
           </div>
-        </div><!-->
+      </div>
 
-      {% block sidebar %}
-      {% endblock sidebar %}
-
-
-      {% block content %}
-      {% endblock content %}
+      <div class="row">
+        <div class="col-md-6">
+          {% block content %}
+          {% endblock content %}
+        </div>
+      </div>
 
       <hr>
+
       <footer>
         <p>&copy; 2016 Company, Inc.</p>
       </footer>
