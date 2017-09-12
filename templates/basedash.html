@@ -25,6 +25,7 @@
   <body>
 
     <!-- NAVBAR -->
+    <!-- TODO: FIX LINKS IN NAVBAR -->
     <nav class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
         <div class="navbar-header">
@@ -34,11 +35,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'dashboard' %}">PodCom</a>
+          <a class="navbar-brand" href="{% url 'dashboard_with_pk' pk=user.pk %}">PodCom</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="{% url 'dashboard' %}">Home</a></li>
+            <li class="active"><a href="{% url 'dashboard_with_pk' pk=user.pk %}">Home</a></li>
             <li><a href="{% url 'userlist' %}">Users</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

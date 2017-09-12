@@ -1,11 +1,21 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import *
 from .forms import *
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+
+
+@login_required
+def home(request):
+    return HttpResponseRedirect(
+               reverse('dashboard_with_pk',
+                       args=[request.user.pk]))
 
 class RegisterView(CreateView):
     form_class = RegisterUserForm
@@ -33,10 +43,29 @@ class PodcastListViewPK(LoginRequiredMixin, ListView):
     redirect_field_name = 'redirect_to'
 
 
+    # def get_object(self, *args, **kwargs):
+    #     pk = self.kwargs.get("pk")
+    #     print(pk)
+    #     print(self.request.user)
+    #     # Need to check if self.request.user is == obj.user
+    #     obj = get_object_or_404(Podcast, id=pk)
+    #     print(obj.user)
+    #     # if obj.user == self.request.user:
+    #     return obj
+
     def get_queryset(self):
         pk = self.kwargs.get("pk")
+        print(pk)
+        print(self.request.user)
         queryset = Podcast.objects.filter(user=pk)
         return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        # Gets the context that is being passed by default to this view.
+        context = super(PodcastListViewPK, self).get_context_data(*args, **kwargs)
+        print(context)
+        return context
+
 
 class PodcastListView(LoginRequiredMixin, ListView):
     template_name = 'podcasts/dashboard.html'
@@ -59,7 +88,12 @@ class PodcastDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self, *args, **kwargs):
         pk = self.kwargs.get("pk")
+        print(pk)
+        print(self.request.user)
+        # Need to check if self.request.user is == obj.user
         obj = get_object_or_404(Podcast, id=pk)
+        print(obj.user)
+        # if obj.user == self.request.user:
         return obj
 
 class PodcastAddView(LoginRequiredMixin, CreateView):
@@ -70,9 +104,7 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
     # success_url = '/podcom/'
 
     def get_success_url(self):
-        return reverse('dashboard_with_pk', args=(self.request.user.pk,))
-
-
+        return reverse('dashboard_with_pk', args=(self.request.pk,))
 
 
     # Saves the valid form with the current user being associated with the saved form data.
@@ -89,6 +121,19 @@ class PodcastUpdateView(LoginRequiredMixin, UpdateView):
     success_url = '/podcom/'
 
     queryset = Podcast.objects.all()
+
+    def get_context_data(self, *args, **kwargs):
+        # Gets the context that is being passed by default to this view.
+        context = super(PodcastUpdateView, self).get_context_data(*args, **kwargs)
+        print(context)
+        print(self.request.user)
+        return context
+
+    def get_object(self, *args, **kwargs):
+        obj = super(PodcastUpdateView, self).get_object(*args, **kwargs)
+        if obj.user != self.request.user:
+            raise PermissionDenied() #or Http404
+        return obj
 
     # saves the valid form with the current user being associated with the saved form data
     def form_valid(self, form):

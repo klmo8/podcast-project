@@ -2,17 +2,26 @@
 {% load static %}
 
 {% block jumbo %}
-<h1>Your Shared Podcasts</h1>
-<p>This is a list of your top shared podcasts. What you see here is what other users will see when they visit your page.</p>
+{% if object_list.0.user == request.user %}
+  <h1>Your Shared Podcasts</h1>
+  <p>This is a list of your top shared podcasts. What you see here is what other users will see when they visit your page.</p>
+{% else %}
+  <h1>{{ object_list.user.username }}</h1>
+{% endif %}
 {% endblock jumbo %}
 
 {% block sidebar %}
+{% if object_list.0.user == request.user %}
   <div class="list-group">
     <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
     <a href="#" class="list-group-item">Find a Friend</a>
     <a href="#" class="list-group-item">Find a Random Podcast</a>
     <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
+    <a href="{% url 'userlist' %}" class="list-group-item">{{ object_list.user.username }}</a>
+
+
   </div>
+{% endif %}
 {% endblock sidebar %}
 
 

@@ -6,6 +6,7 @@
 
 
 {% block sidebar %}
+{% if request.user == object.user %}
   <div class="list-group">
     <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
     <a href="{% url 'editpodcast' pk=user.pk %}" class="list-group-item">Edit Details</a>
@@ -13,6 +14,7 @@
     <a href="#" class="list-group-item">Find a Random Podcast</a>
     <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
   </div>
+{% endif %}
 {% endblock sidebar %}
 "{% url 'details_with_pk' pk=pod.pk %}"
 

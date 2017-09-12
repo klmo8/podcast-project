@@ -24,7 +24,7 @@ class Podcast(models.Model):
 
 
     def __str__(self):
-        return '%s %s' % (self.title, self.id)
+        return '%s %s %s' % (self.title, self.id, self.user)
 
 
 
