@@ -55,14 +55,14 @@ class PodcastListViewPK(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
-        print(pk)
-        print(self.request.user)
         queryset = Podcast.objects.filter(user=pk)
         return queryset
 
-    def get_context_data(self, *args, **kwargs):
-        # Gets the context that is being passed by default to this view.
-        context = super(PodcastListViewPK, self).get_context_data(*args, **kwargs)
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(PodcastListViewPK, self).get_context_data(**kwargs)
+        pk = self.kwargs.get("pk")
+        context['owner'] = User.objects.get(pk=pk)
         print(context)
         return context
 

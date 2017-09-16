@@ -2,24 +2,25 @@
 {% load static %}
 
 {% block jumbo %}
-{% if object_list.0.user == request.user %}
+{% if owner == request.user %}
   <h1>Your Shared Podcasts</h1>
   <p>This is a list of your top shared podcasts. What you see here is what other users will see when they visit your page.</p>
 {% else %}
-  <h1>{{ object_list.user.username }}</h1>
+  {% if object_list %}
+    <h1>{{ owner }}'s Shared Podcasts'</h1>
+  {% else %}
+    <h1>{{ owner }} has not added any podcasts</h1>
+  {% endif %}
 {% endif %}
 {% endblock jumbo %}
 
 {% block sidebar %}
-{% if object_list.0.user == request.user %}
+{% if object_list %}
   <div class="list-group">
     <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
     <a href="#" class="list-group-item">Find a Friend</a>
     <a href="#" class="list-group-item">Find a Random Podcast</a>
     <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
-    <a href="{% url 'userlist' %}" class="list-group-item">{{ object_list.user.username }}</a>
-
-
   </div>
 {% endif %}
 {% endblock sidebar %}
@@ -38,8 +39,11 @@
         <p><a class="btn btn-default detailsButton" href="{% url 'details_with_pk' pk=pod.pk %}" role="button">View details &raquo;</a></p>
       </div>
     {% endfor %}
+  {% elif owner == request.user %}
+    <p><a class="btn btn-default" href="{% url 'addpodcast' %}" role="button">Add a Podcast &raquo;</a></p>
   {% else %}
-  <p><a class="btn btn-default" href="{% url 'addpodcast' %}" role="button">Add a Podcast &raquo;</a></p>
-  <!-- <h2>This user has not added any podcasts to their favorites list yet.</h2> -->
+    <p><a class="btn btn-default" href="{% url 'userlist' %}" role="button">Return to Userlist &raquo;</a></p>
+
+
   {% endif %}
 {% endblock content %}
