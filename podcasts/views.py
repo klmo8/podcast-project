@@ -35,23 +35,11 @@ class DashboardView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         # Gets the context that is being passed by default to this view.
         context = super(DashboardView, self).get_context_data(*args, **kwargs)
-        print(context)
         return context
 
 class PodcastListViewPK(LoginRequiredMixin, ListView):
     template_name = 'podcasts/dashboard_with_pk.html'
     redirect_field_name = 'redirect_to'
-
-
-    # def get_object(self, *args, **kwargs):
-    #     pk = self.kwargs.get("pk")
-    #     print(pk)
-    #     print(self.request.user)
-    #     # Need to check if self.request.user is == obj.user
-    #     obj = get_object_or_404(Podcast, id=pk)
-    #     print(obj.user)
-    #     # if obj.user == self.request.user:
-    #     return obj
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
@@ -63,7 +51,6 @@ class PodcastListViewPK(LoginRequiredMixin, ListView):
         context = super(PodcastListViewPK, self).get_context_data(**kwargs)
         pk = self.kwargs.get("pk")
         context['owner'] = User.objects.get(pk=pk)
-        print(context)
         return context
 
 
@@ -76,7 +63,6 @@ class PodcastListView(LoginRequiredMixin, ListView):
         # print(self.request.user)
         # queryset = Podcast.objects.all()
         queryset = Podcast.objects.filter(user=self.request.user)
-        print(self.kwargs)
         return queryset
 
 class PodcastDetailView(LoginRequiredMixin, DetailView):
@@ -88,11 +74,8 @@ class PodcastDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self, *args, **kwargs):
         pk = self.kwargs.get("pk")
-        print(pk)
-        print(self.request.user)
         # Need to check if self.request.user is == obj.user
         obj = get_object_or_404(Podcast, id=pk)
-        print(obj.user)
         # if obj.user == self.request.user:
         return obj
 
@@ -112,7 +95,6 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
         instance = form.save(commit=False)
         #LoginRequiredMixin ensures that this is a valid/logged-in user.
         instance.user = self.request.user
-        print(self.request.user.pk)
         return super(PodcastAddView, self).form_valid(form)
 
 class PodcastUpdateView(LoginRequiredMixin, UpdateView):
@@ -125,8 +107,6 @@ class PodcastUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, *args, **kwargs):
         # Gets the context that is being passed by default to this view.
         context = super(PodcastUpdateView, self).get_context_data(*args, **kwargs)
-        print(context)
-        print(self.request.user)
         return context
 
     def get_object(self, *args, **kwargs):
@@ -160,11 +140,4 @@ class UserListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = User.objects.all()
         # queryset = class_instance.model_set.all()
-        for query in queryset:
-            print(query)
         return queryset
-
-
-# class LoginView(LoginView):
-#     redirect_authenticated_user = True
-#     redirect_field_name = '/podcom/'
