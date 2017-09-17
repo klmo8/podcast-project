@@ -139,6 +139,8 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
@@ -150,7 +152,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = 'home'
