@@ -1,4 +1,6 @@
 podcom/settings/local.py
+podcom/settings/local2.py
+
 
 bin/
 include/
