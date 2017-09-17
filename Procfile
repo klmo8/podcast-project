@@ -1,1 +1,1 @@
-web: gunicorn podcom.wsgi
+web: gunicorn podcom.wsgi --log-file -
