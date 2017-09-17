@@ -1,1 +1,1 @@
-web: gunicorn podcasts.wsgi --log-file-
+web: gunicorn podcom.wsgi --log-file -
