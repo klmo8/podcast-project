@@ -1,6 +1,4 @@
 podcom/settings/local.py
-podcom/settings/base.py
-podcom/settings/old_settings.py
 
 bin/
 include/
