@@ -3,6 +3,7 @@ podcom/settings/local2.py
 Procfile
 live-static-files/
 .DS_Store
+runtime.txt
 
 
 bin/
