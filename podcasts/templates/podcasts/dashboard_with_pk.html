@@ -29,10 +29,8 @@
 {% block content %}
   {% if podcast_list %}
     {% for pod in podcast_list %}
-    <!-- TODO: find a way to stop these from wrapping! -->
       <div class="{% cycle "col-md-3 content-left text-center" "col-md-3 content-midl text-center" "col-md-3 content-midr text-center" "col-md-3 content-right text-center" %}">
         <h4>{{ pod.title|title }}</h4>
-        <!-- <p>{{ pod.description }}</p> -->
         {% if pod.logo %}
           <img class="pod-logo" src="{{ pod.logo }}">
         {% endif %}

@@ -26,7 +26,6 @@ urlpatterns = [
     # as_view() is a method that creates an instance of this class.
     url(r'^podcom/$', home, name='home'),
     url(r'^admin/', admin.site.urls),
-    # url(r'^podcom/(?P<pk>\d+)/$', PodcastListViewPK.as_view(), name='dashboard'),
     url(r'^podcom/(?P<pk>\d+)/$', PodcastListViewPK.as_view(), name='dashboard_with_pk'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
@@ -36,7 +35,6 @@ urlpatterns = [
     url(r'^podcom/delete/(?P<pk>\d+)/', PodcastDeleteView.as_view()),
     url(r'^podcom/details/edit/(?P<pk>\d+)/$', PodcastUpdateView.as_view(), name='editpodcast'),
     url(r'^podcom/users/$', UserListView.as_view(), name='userlist'),
-    # url(r'^podcom/mycom/$', TemplateView.as_view(template_name='friends.html')),
     url(r'^podcom/mycom/viewfriend/$', TemplateView.as_view(template_name='friendpage.html')),
     url(r'^podcom/mycom/add/$', TemplateView.as_view(template_name='addfriend.html')),
     url(r'^podcom/mycom/delete/$', TemplateView.as_view(template_name='deletefriend.html')),

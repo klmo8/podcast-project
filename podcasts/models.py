@@ -9,11 +9,10 @@ User = settings.AUTH_USER_MODEL
 class Friend(models.Model):
     users = models.ManyToManyField(User)
 
-# What we do here is what shows up in the database.
+# What we define here is what shows up in the database.
 class Podcast(models.Model):
     # Every user is assocated with an entry in the User model (default User model imported above)
     user =              models.ForeignKey(User) #class_instance.model_set.all()
-    # friend =            models.ForeignKey(Friend) #class_instance.model_set.all()
     title =             models.CharField(max_length=120)
     description =       models.CharField(max_length=500)
     logo =              models.URLField(blank=False, default="http://via.placeholder.com/170x170")
@@ -27,7 +26,7 @@ class Podcast(models.Model):
         return '%s %s %s' % (self.title, self.id, self.user)
 
 
-
+# Capitalizes records being saved to the database.
 def pre_save_receiver(sender, instance, *args, **kwargs):
     instance.title = instance.title.title()
 

@@ -10,32 +10,15 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 
-
+# Workaround to redirect users to their personal dashboard after successfully logging in.
 @login_required
 def home(request):
-    return HttpResponseRedirect(
-               reverse('dashboard_with_pk',
-                       args=[request.user.pk]))
+    return HttpResponseRedirect(reverse('dashboard_with_pk', args=[request.user.pk]))
 
 class RegisterView(CreateView):
     form_class = RegisterUserForm
     template_name = 'registration/register.html'
-    #TODO: redirect to homepage instead, then send user confirmation email.
     success_url = '/podcom/'
-
-# Not currently being routed (see PodcastListView instead).
-class DashboardView(TemplateView):
-    # Adding args and kwargs to the get call allows us to print, modify, work with the arguments that are passed through the URL.
-    # Example: PodCom/MyCom/<userID> and we can now access <userID> directly.
-    # def get(self, request, *args, **kwargs):
-    #     context = {}
-    #     return render(request, "dashboard.html", {})
-    template_name = 'podcasts/dashboard.html'
-
-    def get_context_data(self, *args, **kwargs):
-        # Gets the context that is being passed by default to this view.
-        context = super(DashboardView, self).get_context_data(*args, **kwargs)
-        return context
 
 class PodcastListViewPK(LoginRequiredMixin, ListView):
     template_name = 'podcasts/dashboard_with_pk.html'
@@ -47,9 +30,10 @@ class PodcastListViewPK(LoginRequiredMixin, ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
+        # Call the base implementation first to get a context.
         context = super(PodcastListViewPK, self).get_context_data(**kwargs)
         pk = self.kwargs.get("pk")
+        # Add additional context to be passed through to the template.
         context['owner'] = User.objects.get(pk=pk)
         return context
 
@@ -60,8 +44,6 @@ class PodcastListView(LoginRequiredMixin, ListView):
 
 
     def get_queryset(self):
-        # print(self.request.user)
-        # queryset = Podcast.objects.all()
         queryset = Podcast.objects.filter(user=self.request.user)
         return queryset
 
@@ -69,8 +51,7 @@ class PodcastDetailView(LoginRequiredMixin, DetailView):
     template_name = 'podcasts/detailpod.html'
 
     # This is required because it is only with this queryset that we can get the appropriate context_data using the method below
-    # It seems like it needs the queryset to match the context_data to grab
-    queryset = Podcast.objects.all()
+    # ?????????? queryset = Podcast.objects.all()
 
     def get_object(self, *args, **kwargs):
         pk = self.kwargs.get("pk")
@@ -84,7 +65,6 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'redirect_to'
     form_class = PodcastAddForm
     template_name = 'podcasts/addpod.html'
-    # success_url = '/podcom/'
 
     def get_success_url(self):
         return reverse('dashboard_with_pk', args=(self.request.pk,))
@@ -93,7 +73,6 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
     # Saves the valid form with the current user being associated with the saved form data.
     def form_valid(self, form):
         instance = form.save(commit=False)
-        #LoginRequiredMixin ensures that this is a valid/logged-in user.
         instance.user = self.request.user
         return super(PodcastAddView, self).form_valid(form)
 
@@ -128,7 +107,6 @@ class PodcastDeleteView(LoginRequiredMixin, DeleteView):
 
     queryset = Podcast.objects.all()
 
-    # saves the valid form with the current user being associated with the saved form data
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.user = self.request.user
@@ -139,5 +117,4 @@ class UserListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = User.objects.all()
-        # queryset = class_instance.model_set.all()
         return queryset

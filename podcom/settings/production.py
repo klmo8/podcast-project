@@ -127,9 +127,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-
 STATIC_URL = '/static/'
 
 # Add these new lines
@@ -143,9 +140,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
-#STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
 
 MEDIA_URL = "/media/"
 

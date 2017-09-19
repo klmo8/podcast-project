@@ -27,49 +27,5 @@
     </form>
   </div>
 </div>
-<!-- <div class="row">
-  <div class="col-md-6">
-    <div class="float left">
-      <img src="http://via.placeholder.com/150x150" alt="Podcast Logo">
-    </div>
-    <div class="form">
-      <form method="post" role="form"> {% csrf_token %}
-        <div class="form-group">
-          <label class="col-2 col-form-label">Update Description</label>
-          <div class="col-10">
-            <input class="form-control" type="text" value="{{ object.description|default:"" }}" name="description">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-2 col-form-label">Update URL</label>
-          <div class="col-10">
-            <input class="form-control" type="url" value="{{ object.url|default:"" }}" name="url">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-2 col-form-label">Update Favorite Episode</label>
-          <div class="col-10">
-            <input class="form-control" type="url" value="{{ object.favorite_episode|default:"" }}" name="favorite_episode">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-2 col-form-label">Update Saved Clip</label>
-          <div class="col-10">
-            <input class="form-control" type="url" value="{{ object.saved_clip|default:"" }}" name="saved_clip">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-2 col-form-label">Update Shownotes</label>
-          <div class="col-10">
-            <input class="form-control" type="url" value="{{ object.shownotes|default:"" }}" name="shownotes">
-          </div>
-        </div>
 
-        <span class="input-group-btn">
-         <button class="btn btn-default" type="submit">Submit</button>
-        </span>
-      </form>
-    </div>
-  </div>
-</div> -->
 {% endblock content %}

@@ -13,7 +13,6 @@ class PodcastAddForm(forms.ModelForm):
         super(PodcastAddForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
 
-    # ??? Help
     helper = FormHelper()
     helper.form_class = 'form_horizontal'
     helper.label_class = 'col-lg-2'
@@ -36,10 +35,6 @@ class PodcastAddForm(forms.ModelForm):
             'url': 'Homepage',
         }
 
-    # def clean_title(self):
-    #     title = self.cleaned_data.get("title")
-    #     title = title.capitalize()
-    #     return title
 
 
 class PodcastUpdateForm(forms.ModelForm):
@@ -68,16 +63,6 @@ class PodcastUpdateForm(forms.ModelForm):
             'logo': 'Link to iTunes Coverart',
             'url': 'Homepage',
         }
-    # class Meta:
-    #     model = Podcast
-    #     fields = [
-    #         'description',
-    #         'url',
-    #         'logo',
-    #         'favorite_episode',
-    #         'saved_clip',
-    #         'shownotes'
-    #     ]
 
 class PodcastDeleteForm(forms.ModelForm):
     class Meta:
