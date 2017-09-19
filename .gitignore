@@ -1,5 +1,7 @@
 podcom/settings/local.py
 podcom/settings/local2.py
+.Procfile
+live-static-files/
 
 
 bin/
