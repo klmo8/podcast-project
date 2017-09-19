@@ -1,7 +1,8 @@
 podcom/settings/local.py
 podcom/settings/local2.py
-.Procfile
+Procfile
 live-static-files/
+.DS_Store
 
 
 bin/
