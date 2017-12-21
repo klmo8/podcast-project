@@ -18,6 +18,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from podcasts import views
 from podcasts.views import *
 from django.views.generic import View, TemplateView, DetailView, ListView, CreateView
 
@@ -32,11 +33,12 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
     url(r'^podcom/details/(?P<pk>\d+)/', PodcastDetailView.as_view(), name='details_with_pk'),
     url(r'^podcom/add/$', PodcastAddView.as_view(), name='addpodcast'),
+    url(r'^podcom/add2/(?P<pk>\d+)/$', views.add_this_podcast, name='addthispodcast'),
     url(r'^podcom/delete/(?P<pk>\d+)/', PodcastDeleteView.as_view()),
     url(r'^podcom/details/edit/(?P<pk>\d+)/$', PodcastUpdateView.as_view(), name='editpodcast'),
     url(r'^podcom/users/$', UserListView.as_view(), name='userlist'),
-    url(r'^podcom/mycom/viewfriend/$', TemplateView.as_view(template_name='friendpage.html')),
-    url(r'^podcom/mycom/add/$', TemplateView.as_view(template_name='addfriend.html')),
-    url(r'^podcom/mycom/delete/$', TemplateView.as_view(template_name='deletefriend.html')),
-    url(r'^podcom/mycom/details/$', TemplateView.as_view(template_name='fdetailpod.html')),
+    # url(r'^podcom/mycom/viewfriend/$', TemplateView.as_view(template_name='friendpage.html')),
+    # url(r'^podcom/mycom/add/$', TemplateView.as_view(template_name='addfriend.html')),
+    # url(r'^podcom/mycom/delete/$', TemplateView.as_view(template_name='deletefriend.html')),
+    # url(r'^podcom/mycom/details/$', TemplateView.as_view(template_name='fdetailpod.html')),
 ]

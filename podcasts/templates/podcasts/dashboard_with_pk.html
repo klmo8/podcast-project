@@ -7,7 +7,8 @@
   <p>This is a list of your top shared podcasts. What you see here is what other users will see when they visit your page.</p>
 {% else %}
   {% if object_list %}
-    <h1>{{ owner }}'s Shared Podcasts'</h1>
+    <h1>{{ owner }}'s Shared Podcasts</h1>
+    </br><button type="button" class="btn btn-primary btn-lg friend-button">Add this user to Friendlist</button>
   {% else %}
     <h1>{{ owner }} has not added any podcasts</h1>
   {% endif %}
@@ -18,10 +19,25 @@
 {% if object_list %}
   <div class="list-group">
     <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
-    <a href="#" class="list-group-item">Find a Friend</a>
     <a href="#" class="list-group-item">Find a Random Podcast</a>
     <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
-  </div>
+    {% if owner %}
+    <form method="GET" action="{% url 'dashboard_with_pk' pk=owner.pk %}">
+    {% else %}
+    <form method="GET" action="{% url 'dashboard_with_pk' pk=user.pk %}">
+    {% endif %}
+        <div class="input-group">
+          {% if flag == 1 %}
+          <input type="text" class="form-control" name="q" placeholder="User not found. Please try again."></b>
+          {% else %}
+          <input type="text" class="form-control" name="q" placeholder="Search for a friend">
+          {% endif %}
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Go!</button>
+          </span>
+        </div><!-- /input-group -->
+      </form>
+   </div>
 {% endif %}
 {% endblock sidebar %}
 

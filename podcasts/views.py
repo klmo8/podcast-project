@@ -20,20 +20,36 @@ class RegisterView(CreateView):
     template_name = 'registration/register.html'
     success_url = '/podcom/'
 
+
 class PodcastListViewPK(LoginRequiredMixin, ListView):
     template_name = 'podcasts/dashboard_with_pk.html'
     redirect_field_name = 'redirect_to'
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
+        searchterm = self.request.GET.get("q")
+        result = User.objects.filter(username__iexact=searchterm)
+        if (result):
+            pk = result[0].pk
+        else:
+            pk = self.kwargs.get("pk")
         queryset = Podcast.objects.filter(user=pk)
         return queryset
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context.
-        context = super(PodcastListViewPK, self).get_context_data(**kwargs)
-        pk = self.kwargs.get("pk")
         # Add additional context to be passed through to the template.
+        context = super(PodcastListViewPK, self).get_context_data(**kwargs)
+        context['flag'] = 0
+        searchterm = self.request.GET.get("q")
+        result = User.objects.filter(username__iexact=searchterm)
+        if (searchterm and not result):
+            context['flag'] = 1
+            pk = self.kwargs.get("pk")
+        elif (result):
+            pk = result[0].pk
+        else:
+            pk = self.kwargs.get("pk")
         context['owner'] = User.objects.get(pk=pk)
         return context
 
@@ -47,11 +63,9 @@ class PodcastListView(LoginRequiredMixin, ListView):
         queryset = Podcast.objects.filter(user=self.request.user)
         return queryset
 
+
 class PodcastDetailView(LoginRequiredMixin, DetailView):
     template_name = 'podcasts/detailpod.html'
-
-    # This is required because it is only with this queryset that we can get the appropriate context_data using the method below
-    # ?????????? queryset = Podcast.objects.all()
 
     def get_object(self, *args, **kwargs):
         pk = self.kwargs.get("pk")
@@ -59,6 +73,7 @@ class PodcastDetailView(LoginRequiredMixin, DetailView):
         obj = get_object_or_404(Podcast, id=pk)
         # if obj.user == self.request.user:
         return obj
+
 
 class PodcastAddView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
@@ -75,6 +90,25 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
         instance = form.save(commit=False)
         instance.user = self.request.user
         return super(PodcastAddView, self).form_valid(form)
+
+# FBV to add functionality for an "Add this Podcast" button
+def add_this_podcast(request, *args, **kwargs):
+    # Get the pk of the podcast to be added (passed via kwargs) and then get that object from the Model
+    user_pk = request.user.pk
+    pk = kwargs.get('pk')
+    obj = get_object_or_404(Podcast, id=pk)
+
+    # Check if podcast already exists in this user's database
+    exists = Podcast.objects.filter(user=request.user, title=obj.title)
+    print(exists)
+    if (exists):
+        return render(request, 'podcasts/test.html')
+    else:
+        # Save relevant information retrieved from model to current user
+        podcast = Podcast.objects.create(user=request.user, title=obj.title, description=obj.description, url=obj.url, logo=obj.logo)
+        podcast.save()
+        # Redirect to dashboard
+        return HttpResponseRedirect(reverse('dashboard_with_pk', args=[request.user.pk]))
 
 class PodcastUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PodcastUpdateForm
