@@ -1,3 +1,8 @@
+<img width="1147" alt="screen shot 2017-09-19 at 6 29 34 pm" src="https://user-images.githubusercontent.com/18518784/30622839-10123fd6-9d69-11e7-8624-23b4609fb01c.png">
+
+<img width="1146" alt="screen shot 2017-09-19 at 6 29 57 pm" src="https://user-images.githubusercontent.com/18518784/30622840-12e5f400-9d69-11e7-8fb9-de30b09dcb9f.png">
+
+
 # PodCom Podcast Sharing App  
 
 A place for podcast lovers to share their favorite podcasts and find new ones to follow.
