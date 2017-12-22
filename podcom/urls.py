@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^podcom/details/(?P<pk>\d+)/', PodcastDetailView.as_view(), name='details_with_pk'),
     url(r'^podcom/add/$', PodcastAddView.as_view(), name='addpodcast'),
     url(r'^podcom/add2/(?P<pk>\d+)/$', views.add_this_podcast, name='addthispodcast'),
-    url(r'^podcom/delete/(?P<pk>\d+)/', PodcastDeleteView.as_view()),
+    url(r'^podcom/delete/(?P<pk>\d+)/', PodcastDeleteView.as_view(), name='deletepodcast'),
     url(r'^podcom/details/edit/(?P<pk>\d+)/$', PodcastUpdateView.as_view(), name='editpodcast'),
     url(r'^podcom/users/$', UserListView.as_view(), name='userlist'),
     # url(r'^podcom/mycom/viewfriend/$', TemplateView.as_view(template_name='friendpage.html')),

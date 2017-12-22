@@ -49,4 +49,15 @@
   <div class="well"><a href="{{ object.shownotes }}"/>{{ object.shownotes }}</a></div>
 {% endif %}
 
+
+<div class="row">
+  <div class="col-xs-12">
+    <form action="{% url 'deletepodcast' pk=object.pk %}">
+      <input class="btn btn-danger" type="submit" value="Delete Podcast">
+      <a href="{% url 'editpodcast' pk=object.pk %}" class="btn btn-primary" role="button">Edit Podcast</a>
+    </form>
+   </div>
+</div>
+
+
 {% endblock content %}

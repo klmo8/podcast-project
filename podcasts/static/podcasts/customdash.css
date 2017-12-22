@@ -1,3 +1,15 @@
+.error {
+  font-weight: bold;
+  color: black;
+  font-size: 1.5em;
+}
+
+.success {
+  font-weight: bold;
+  color: green;
+  font-size: 1.5em;
+}
+
 body {
   /*background-image: url('gradient-red-simple-background-705766-2048x1536.jpg');*/
   background-color: #F63;

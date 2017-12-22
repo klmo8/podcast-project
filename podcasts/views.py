@@ -1,5 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
@@ -9,6 +11,7 @@ from .forms import *
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+
 
 # Workaround to redirect users to their personal dashboard after successfully logging in.
 @login_required
@@ -75,15 +78,13 @@ class PodcastDetailView(LoginRequiredMixin, DetailView):
         return obj
 
 
-class PodcastAddView(LoginRequiredMixin, CreateView):
+class PodcastAddView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
+    success_url = '/podcom/'
     form_class = PodcastAddForm
     template_name = 'podcasts/addpod.html'
-
-    def get_success_url(self):
-        return reverse('dashboard_with_pk', args=(self.request.pk,))
-
+    success_message = "Podcast successfully added"
 
     # Saves the valid form with the current user being associated with the saved form data.
     def form_valid(self, form):
@@ -91,8 +92,12 @@ class PodcastAddView(LoginRequiredMixin, CreateView):
         instance.user = self.request.user
         return super(PodcastAddView, self).form_valid(form)
 
+    # def get_success_url(self):
+    #     return reverse('dashboard_with_pk', args=(self.request.pk,))
+
 # FBV to add functionality for an "Add this Podcast" button
 def add_this_podcast(request, *args, **kwargs):
+
     # Get the pk of the podcast to be added (passed via kwargs) and then get that object from the Model
     user_pk = request.user.pk
     pk = kwargs.get('pk')
@@ -100,15 +105,15 @@ def add_this_podcast(request, *args, **kwargs):
 
     # Check if podcast already exists in this user's database
     exists = Podcast.objects.filter(user=request.user, title=obj.title)
-    print(exists)
     if (exists):
-        return render(request, 'podcasts/test.html')
+        messages.error(request, 'The selected podcast was not added because it already exists in your list')
     else:
+        messages.success(request, 'Podcast successfully added')
         # Save relevant information retrieved from model to current user
         podcast = Podcast.objects.create(user=request.user, title=obj.title, description=obj.description, url=obj.url, logo=obj.logo)
         podcast.save()
         # Redirect to dashboard
-        return HttpResponseRedirect(reverse('dashboard_with_pk', args=[request.user.pk]))
+    return HttpResponseRedirect(reverse('dashboard_with_pk', args=[request.user.pk]))
 
 class PodcastUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PodcastUpdateForm
@@ -138,8 +143,13 @@ class PodcastDeleteView(LoginRequiredMixin, DeleteView):
     form_class = PodcastDeleteForm
     template_name = 'podcasts/deletepod.html'
     success_url = '/podcom/'
+    success_message = "Podcast successfully deleted"
 
     queryset = Podcast.objects.all()
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(PodcastDeleteView, self).delete(request, *args, **kwargs)
 
     def form_valid(self, form):
         instance = form.save(commit=False)
