@@ -20,9 +20,9 @@
     <h3>Are you sure you want to delete this podcast?</h3>
     <form method="POST">{% csrf_token %}
       {{ form|crispy }}
-        <a href="{% url 'details_with_pk' pk=object.pk %}" class="btn btn-primary" role="button">Cancel</a>
       <!-- <button type="button" class="btn btn-secondary" href="{% url 'details_with_pk' pk=object.pk %}">Cancel</button> -->
-      <input class="btn btn-primary" type="submit" value="Submit">
+      <a href="{% url 'editpodcast' pk=object.pk %}" class="btn btn-danger" role="button">Cancel</a>
+      <input class="btn btn-success" type="submit" value="Yes">
     </form>
   </div>
 </div>

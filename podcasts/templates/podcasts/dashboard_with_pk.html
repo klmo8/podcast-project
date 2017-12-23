@@ -16,10 +16,10 @@
 {% endblock jumbo %}
 
 {% block sidebar %}
-{% if object_list %}
+<!-- {% if object_list %} -->
   <div class="list-group">
     <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
-    <a href="#" class="list-group-item">Find a Random Podcast</a>
+    <!-- <a href="#" class="list-group-item">Find a Random Podcast</a> -->
     <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
     {% if owner %}
     <form method="GET" action="{% url 'dashboard_with_pk' pk=owner.pk %}">
@@ -38,7 +38,7 @@
         </div><!-- /input-group -->
       </form>
    </div>
-{% endif %}
+<!-- {% endif %} -->
 {% endblock sidebar %}
 
 
@@ -64,7 +64,5 @@
     <p><a class="btn btn-default" href="{% url 'addpodcast' %}" role="button">Add a Podcast &raquo;</a></p>
   {% else %}
     <p><a class="btn btn-default" href="{% url 'userlist' %}" role="button">Return to Userlist &raquo;</a></p>
-
-
   {% endif %}
 {% endblock content %}

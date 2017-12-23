@@ -6,20 +6,13 @@
 
 
 {% block sidebar %}
-{% if request.user == object.user %}
-  <div class="list-group">
-    <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
-    <a href="{% url 'editpodcast' pk=object.pk %}" class="list-group-item">Edit Details</a>
-    <a href="#" class="list-group-item">Find a Random Podcast</a>
-    <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
-  </div>
-{% else %}
-  <div class="list-group">
-    <a href="{% url 'addthispodcast' pk=object.pk %}" class="list-group-item">Add this Podcast</a>
-    <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
-    <a href="#" class="list-group-item">Find a Friend</a>
-  </div>
-{% endif %}
+<div class="list-group">
+  <a href="{% url 'dashboard_with_pk' pk=request.user.pk %}" class="list-group-item">Go Back to Homepage</a>
+  {% if request.user != object.user %}
+  <a href="{% url 'addthispodcast' pk=object.pk %}" class="list-group-item">Add this Podcast</a>
+  {% endif %}
+  <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
+</div>
 {% endblock sidebar %}
 <!-- "{% url 'details_with_pk' pk=pod.pk %}" -->
 
@@ -52,12 +45,16 @@
 
 <div class="row">
   <div class="col-xs-12">
+{% if request.user == object.user %}
     <form action="{% url 'deletepodcast' pk=object.pk %}">
       <input class="btn btn-danger" type="submit" value="Delete Podcast">
-      <a href="{% url 'editpodcast' pk=object.pk %}" class="btn btn-primary" role="button">Edit Podcast</a>
+      <a href="{% url 'editpodcast' pk=object.pk %}" class="btn btn-primary" role="button">Edit Details</a>
+{% else %}
+    <form action="{% url 'addthispodcast' pk=object.pk %}">
+      <input class="btn btn-success" type="submit" value="Add this Podcast">
+{% endif %}
     </form>
-   </div>
+  </div>
 </div>
-
 
 {% endblock content %}

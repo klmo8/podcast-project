@@ -6,11 +6,12 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import *
-from .forms import *
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from .models import *
+from .forms import *
+from .mixins import *
 
 
 # Workaround to redirect users to their personal dashboard after successfully logging in.
@@ -24,7 +25,7 @@ class RegisterView(CreateView):
     success_url = '/podcom/'
 
 
-class PodcastListViewPK(LoginRequiredMixin, ListView):
+class PodcastListViewPK(LoginRequiredMixin, LookupUserMixin, ListView):
     template_name = 'podcasts/dashboard_with_pk.html'
     redirect_field_name = 'redirect_to'
 
@@ -38,24 +39,6 @@ class PodcastListViewPK(LoginRequiredMixin, ListView):
             pk = self.kwargs.get("pk")
         queryset = Podcast.objects.filter(user=pk)
         return queryset
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context.
-        # Add additional context to be passed through to the template.
-        context = super(PodcastListViewPK, self).get_context_data(**kwargs)
-        context['flag'] = 0
-        searchterm = self.request.GET.get("q")
-        result = User.objects.filter(username__iexact=searchterm)
-        if (searchterm and not result):
-            context['flag'] = 1
-            pk = self.kwargs.get("pk")
-        elif (result):
-            pk = result[0].pk
-        else:
-            pk = self.kwargs.get("pk")
-        context['owner'] = User.objects.get(pk=pk)
-        return context
-
 
 class PodcastListView(LoginRequiredMixin, ListView):
     template_name = 'podcasts/dashboard.html'
@@ -72,9 +55,7 @@ class PodcastDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self, *args, **kwargs):
         pk = self.kwargs.get("pk")
-        # Need to check if self.request.user is == obj.user
         obj = get_object_or_404(Podcast, id=pk)
-        # if obj.user == self.request.user:
         return obj
 
 
@@ -92,8 +73,6 @@ class PodcastAddView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         instance.user = self.request.user
         return super(PodcastAddView, self).form_valid(form)
 
-    # def get_success_url(self):
-    #     return reverse('dashboard_with_pk', args=(self.request.pk,))
 
 # FBV to add functionality for an "Add this Podcast" button
 def add_this_podcast(request, *args, **kwargs):
@@ -112,7 +91,7 @@ def add_this_podcast(request, *args, **kwargs):
         # Save relevant information retrieved from model to current user
         podcast = Podcast.objects.create(user=request.user, title=obj.title, description=obj.description, url=obj.url, logo=obj.logo)
         podcast.save()
-        # Redirect to dashboard
+    # Redirect to dashboard
     return HttpResponseRedirect(reverse('dashboard_with_pk', args=[request.user.pk]))
 
 class PodcastUpdateView(LoginRequiredMixin, UpdateView):
@@ -133,7 +112,7 @@ class PodcastUpdateView(LoginRequiredMixin, UpdateView):
             raise PermissionDenied() #or Http404
         return obj
 
-    # saves the valid form with the current user being associated with the saved form data
+    # Saves the valid form with the current user being associated with the saved form data
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.user = self.request.user
@@ -156,7 +135,7 @@ class PodcastDeleteView(LoginRequiredMixin, DeleteView):
         instance.user = self.request.user
         return super(PodcastDeleteView, self).form_valid(form)
 
-class UserListView(LoginRequiredMixin, ListView):
+class UserListView(LoginRequiredMixin, LookupUserMixin, ListView):
     template_name = 'podcasts/users.html'
 
     def get_queryset(self):
