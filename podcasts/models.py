@@ -6,8 +6,21 @@ from django.urls import reverse
 
 User = settings.AUTH_USER_MODEL
 
+# Credit to Max Goodridge (https://www.youtube.com/watch?v=Fc2O3_2kax8&list=PLw02n0FEB3E3VSHjyYMcFadtQORvl1Ssj).
+# The below code for friendships was adapted from his Django tutorial series on YouTube.
+
 class Friend(models.Model):
     users = models.ManyToManyField(User)
+    current_user = models.ForeignKey(User, related_name='owner', null=True)
+
+    # Using a class method because this functionality is very specific to the Friend model (will not be used by any other models)
+    # Therefore, we associate the desired functionality directly with the class (rather than implementing in views)
+    @classmethod
+    def make_friend(cls, current_user, new_friend):
+        friend, created = cls.objects.get_or_create(
+            current_user=current_user
+        )
+        friend.users.add(new_friend)
 
 # What we define here is what shows up in the database.
 class Podcast(models.Model):

@@ -8,18 +8,26 @@
 {% else %}
   {% if object_list %}
     <h1>{{ owner }}'s Shared Podcasts</h1>
-    </br><button type="button" class="btn btn-primary btn-lg friend-button">Add this user to Friendlist</button>
+    </br>
+    {% if not is_friend %}
+    <form action="{% url 'updatefriends' pk=owner.pk %}">
+      <input class="btn btn-primary btn-lg friend-button" type="submit" value="Add user to Friendslist">
+    </form>
+    {% endif %}
   {% else %}
     <h1>{{ owner }} has not added any podcasts</h1>
   {% endif %}
 {% endif %}
 {% endblock jumbo %}
 
+
+
+
 {% block sidebar %}
 <!-- {% if object_list %} -->
   <div class="list-group">
     <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
-    <!-- <a href="#" class="list-group-item">Find a Random Podcast</a> -->
+    <a href="{% url 'friendlist' pk=user.pk %}" class="list-group-item">View Friendslist</a>
     <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
     {% if owner %}
     <form method="GET" action="{% url 'dashboard_with_pk' pk=owner.pk %}">

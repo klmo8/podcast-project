@@ -33,10 +33,14 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
     url(r'^podcom/details/(?P<pk>\d+)/', PodcastDetailView.as_view(), name='details_with_pk'),
     url(r'^podcom/add/$', PodcastAddView.as_view(), name='addpodcast'),
-    url(r'^podcom/add2/(?P<pk>\d+)/$', views.add_this_podcast, name='addthispodcast'),
+    url(r'^podcom/addthis/(?P<pk>\d+)/$', views.add_this_podcast, name='addthispodcast'),
     url(r'^podcom/delete/(?P<pk>\d+)/', PodcastDeleteView.as_view(), name='deletepodcast'),
     url(r'^podcom/details/edit/(?P<pk>\d+)/$', PodcastUpdateView.as_view(), name='editpodcast'),
     url(r'^podcom/users/$', UserListView.as_view(), name='userlist'),
+    url(r'^podcom/updatefriends/(?P<pk>\d+)/', views.update_friends, name='updatefriends'),
+    url(r'^podcom/friendslist/(?P<pk>\d+)/', FriendListView.as_view(), name='friendlist'),
+
+
     # url(r'^podcom/mycom/viewfriend/$', TemplateView.as_view(template_name='friendpage.html')),
     # url(r'^podcom/mycom/add/$', TemplateView.as_view(template_name='addfriend.html')),
     # url(r'^podcom/mycom/delete/$', TemplateView.as_view(template_name='deletefriend.html')),

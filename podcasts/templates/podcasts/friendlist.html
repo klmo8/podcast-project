@@ -1,7 +1,7 @@
 {% extends 'basemod.html' %}
 
 {% block jumbo %}
-<h1>Current List of Active Users.. test>> {{ owner }} </h1>
+<h1>Your Friendlist</h1>
 {% endblock jumbo %}
 
 {% block sidebar %}
@@ -36,7 +36,7 @@
 {% endblock sidebar %}
 
 {% block content %}
-<h3>Select a user to view their shared podcasts</h3>
+<h3>Select a friend to view their shared podcasts</h3>
   <div class="well">
     <ul>
     {% for obj in object_list %}

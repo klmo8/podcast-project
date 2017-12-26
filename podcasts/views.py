@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -39,6 +39,33 @@ class PodcastListViewPK(LoginRequiredMixin, LookupUserMixin, ListView):
             pk = self.kwargs.get("pk")
         queryset = Podcast.objects.filter(user=pk)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context.
+        # Add additional context to be passed through to the template.
+        context = super(PodcastListViewPK, self).get_context_data(**kwargs)
+        context['flag'] = False
+        searchterm = self.request.GET.get("q")
+        result = User.objects.filter(username__iexact=searchterm)
+        if (searchterm and not result):
+            context['flag'] = True
+            pk = self.kwargs.get("pk")
+        elif (result):
+            pk = result[0].pk
+        else:
+            pk = self.kwargs.get("pk")
+        context['owner'] = User.objects.get(pk=pk)
+        print(User.objects.get(pk=pk))
+
+        # Get friendslist to determine whether or not to display 'Add user to Friendslist' button
+        friend = Friend.objects.get(current_user=self.request.user.pk)
+        friends = friend.users.all()
+        context['is_friend'] = False
+        for friend in friends:
+            print(friend)
+            if friend == User.objects.get(pk=pk):
+                context['is_friend'] = True
+        return context
 
 class PodcastListView(LoginRequiredMixin, ListView):
     template_name = 'podcasts/dashboard.html'
@@ -78,7 +105,7 @@ class PodcastAddView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 def add_this_podcast(request, *args, **kwargs):
 
     # Get the pk of the podcast to be added (passed via kwargs) and then get that object from the Model
-    user_pk = request.user.pk
+    # NOT SURE IF NEEDED: user_pk = request.user.pk
     pk = kwargs.get('pk')
     obj = get_object_or_404(Podcast, id=pk)
 
@@ -140,4 +167,30 @@ class UserListView(LoginRequiredMixin, LookupUserMixin, ListView):
 
     def get_queryset(self):
         queryset = User.objects.all()
+        return queryset
+
+# Credit to Max Goodridge (https://www.youtube.com/watch?v=Fc2O3_2kax8&list=PLw02n0FEB3E3VSHjyYMcFadtQORvl1Ssj).
+# The below code for friendships was adapted from his Django tutorial series on YouTube.
+def update_friends(request, pk):
+
+    # Get user by pk to add this user to current user's list of friends
+    new_friend = User.objects.get(pk=pk)
+    Friend.make_friend(request.user, new_friend)
+
+    # Get context data to populate the friendslist template with all(updated) friends of current user
+    # friendslist = friend.users.all()
+    # print(friendslist)
+
+    friend = Friend.objects.get(current_user=request.user)
+    friends = friend.users.all()
+
+    return redirect('friendlist', args=[request.user.pk])
+
+class FriendListView(LoginRequiredMixin, LookupUserMixin, ListView):
+    template_name = 'podcasts/friendlist.html'
+
+    def get_queryset(self):
+        friend = Friend.objects.get(current_user=self.request.user)
+        queryset = friend.users.all()
+        print(queryset)
         return queryset

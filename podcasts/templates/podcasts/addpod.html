@@ -8,6 +8,7 @@
 {% block sidebar %}
 <div class="list-group">
   <a href="{% url 'dashboard_with_pk' pk=request.user.pk %}" class="list-group-item">Go Back to Homepage</a>
+  <!-- <a href="{% url 'updatefriends' pk=request.user.pk %}" class="list-group-item">View Friendslist</a> -->
   <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
 </div>
 {% endblock sidebar %}

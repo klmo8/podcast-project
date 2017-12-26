@@ -11,6 +11,7 @@
   {% if request.user != object.user %}
   <a href="{% url 'addthispodcast' pk=object.pk %}" class="list-group-item">Add this Podcast</a>
   {% endif %}
+  <!-- <a href="{% url 'updatefriends' pk=request.user.pk %}" class="list-group-item">View Friendslist</a> -->
   <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
 </div>
 {% endblock sidebar %}
