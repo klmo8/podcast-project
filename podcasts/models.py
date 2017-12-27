@@ -2,9 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save
 from django.urls import reverse
+from django.contrib.auth.models import User
 
-
-User = settings.AUTH_USER_MODEL
+# User = settings.AUTH_USER_MODEL
 
 # Credit to Max Goodridge (https://www.youtube.com/watch?v=Fc2O3_2kax8&list=PLw02n0FEB3E3VSHjyYMcFadtQORvl1Ssj).
 # The below code for friendships was adapted from his Django tutorial series on YouTube.
@@ -21,6 +21,13 @@ class Friend(models.Model):
             current_user=current_user
         )
         friend.users.add(new_friend)
+
+    @classmethod
+    def unfriend(cls, current_user, new_friend):
+        friend, created = cls.objects.get_or_create(
+            current_user=current_user
+        )
+        friend.users.remove(new_friend)
 
 # What we define here is what shows up in the database.
 class Podcast(models.Model):

@@ -55,14 +55,12 @@ class PodcastListViewPK(LoginRequiredMixin, LookupUserMixin, ListView):
         else:
             pk = self.kwargs.get("pk")
         context['owner'] = User.objects.get(pk=pk)
-        print(User.objects.get(pk=pk))
 
         # Get friendslist to determine whether or not to display 'Add user to Friendslist' button
         friend = Friend.objects.get(current_user=self.request.user.pk)
         friends = friend.users.all()
         context['is_friend'] = False
         for friend in friends:
-            print(friend)
             if friend == User.objects.get(pk=pk):
                 context['is_friend'] = True
         return context
@@ -171,26 +169,46 @@ class UserListView(LoginRequiredMixin, LookupUserMixin, ListView):
 
 # Credit to Max Goodridge (https://www.youtube.com/watch?v=Fc2O3_2kax8&list=PLw02n0FEB3E3VSHjyYMcFadtQORvl1Ssj).
 # The below code for friendships was adapted from his Django tutorial series on YouTube.
-def update_friends(request, pk):
+def update_friends(request, operation, pk):
 
-    # Get user by pk to add this user to current user's list of friends
-    new_friend = User.objects.get(pk=pk)
-    Friend.make_friend(request.user, new_friend)
+    friend = User.objects.get(pk=pk)
 
-    # Get context data to populate the friendslist template with all(updated) friends of current user
-    # friendslist = friend.users.all()
-    # print(friendslist)
+    if operation == 'add':
+        # Get user by pk to add this user to current user's list of friends
+        Friend.make_friend(request.user, friend)
+        messages.success(request, 'User successfully added to Friendlist')
 
-    friend = Friend.objects.get(current_user=request.user)
-    friends = friend.users.all()
+    elif operation == 'remove':
+        Friend.unfriend(request.user, friend)
+        messages.success(request, 'User successfully removed from Friendlist')
 
-    return redirect('friendlist', args=[request.user.pk])
+    # return redirect('friendlist', args=[request.user.pk])
+    return HttpResponseRedirect(reverse('friendlist', args=[request.user.pk]))
 
-class FriendListView(LoginRequiredMixin, LookupUserMixin, ListView):
+
+class FriendListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
     template_name = 'podcasts/friendlist.html'
 
     def get_queryset(self):
         friend = Friend.objects.get(current_user=self.request.user)
         queryset = friend.users.all()
-        print(queryset)
         return queryset
+
+
+def search_user(request):
+
+    #if searchterm is found, then redirect to dashboard with pk where pk is found user
+    #if searchterm not found, then redirect to friendlist with is_found = false (which causes "user not found" message)
+    searchterm = request.GET.get("q")
+    if searchterm:
+        lookup = User.objects.filter(username__iexact=searchterm)
+    print(searchterm)
+    print(lookup)
+    if searchterm and not lookup:
+        messages.success(request, "User not found. Please try again.")
+        return HttpResponseRedirect(reverse('friendlist', args=[request.user.pk]))
+    elif searchterm and lookup:
+        pk = lookup[0].pk
+        return HttpResponseRedirect(reverse('dashboard_with_pk', args=[pk]))
+    else:
+        return HttpResponseRedirect(reverse('friendlist', args=[request.user.pk]))

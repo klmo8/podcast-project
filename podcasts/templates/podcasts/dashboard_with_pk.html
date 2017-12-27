@@ -10,10 +10,13 @@
     <h1>{{ owner }}'s Shared Podcasts</h1>
     </br>
     {% if not is_friend %}
-    <form action="{% url 'updatefriends' pk=owner.pk %}">
-      <input class="btn btn-primary btn-lg friend-button" type="submit" value="Add user to Friendslist">
-    </form>
+    <form action="{% url 'updatefriends' operation='add' pk=owner.pk %}">
+      <input class="btn btn-primary btn-lg friend-button" type="submit" value="Add user to Friendlist">
+    {% else %}
+    <form action="{% url 'updatefriends' operation='remove' pk=owner.pk  %}">
+      <input class="btn btn-danger btn-lg friend-button" type="submit" value="Remove user from Friendlist">
     {% endif %}
+    </form>
   {% else %}
     <h1>{{ owner }} has not added any podcasts</h1>
   {% endif %}
@@ -27,8 +30,8 @@
 <!-- {% if object_list %} -->
   <div class="list-group">
     <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
-    <a href="{% url 'friendlist' pk=user.pk %}" class="list-group-item">View Friendslist</a>
     <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
+    <a href="{% url 'friendlist' pk=user.pk %}" class="list-group-item">View Friendlist</a>
     {% if owner %}
     <form method="GET" action="{% url 'dashboard_with_pk' pk=owner.pk %}">
     {% else %}

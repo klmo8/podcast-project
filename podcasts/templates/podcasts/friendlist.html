@@ -13,16 +13,11 @@
 
 <div class="list-group">
   <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
-  <!-- <a href="#" class="list-group-item">Find a Random Podcast</a> -->
   <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
-  <!-- <a href="{% url 'updatefriends' pk=request.user.pk %}" class="list-group-item">View Friendslist</a> -->
-  {% if owner %}
-  <form method="GET" action="{% url 'dashboard_with_pk' pk=owner.pk %}">
-  {% else %}
-  <form method="GET" action="{% url 'dashboard_with_pk' pk=user.pk %}">
-  {% endif %}
+  <a href="{% url 'friendlist' pk=request.user.pk %}" class="list-group-item active">View Friendslist</a>
+  <form method="GET" action="{% url 'searchuser' %}">
       <div class="input-group">
-        {% if flag == 1 %}
+        {% if messages %}
         <input type="text" class="form-control" name="q" placeholder="User not found. Please try again."></b>
         {% else %}
         <input type="text" class="form-control" name="q" placeholder="Search for a friend">
@@ -36,14 +31,25 @@
 {% endblock sidebar %}
 
 {% block content %}
-<h3>Select a friend to view their shared podcasts</h3>
-  <div class="well">
-    <ul>
-    {% for obj in object_list %}
-      <a href="{% url 'dashboard_with_pk' pk=obj.pk %}">
-        <li><h4>{{ obj.username }}</h4></li>
-      </a>
+<!-- {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
+</ul>
+{% endif %} -->
+{% if object_list %}
+  <h3>Select a friend to view their shared podcasts</h3>
+    <div class="well">
+      <ul>
+        {% for obj in object_list %}
+        <a href="{% url 'dashboard_with_pk' pk=obj.pk %}">
+          <li><h4>{{ obj.username }}</h4></li>
+        </a>
+      {% endfor %}
     </ul>
   </div>
+{% else %}
+  <h3>Your Friendlist is currently empty. Use the sidebar to find new friends.</h3>
+{% endif %}
 {% endblock content %}

@@ -1,21 +1,16 @@
 {% extends 'basemod.html' %}
 
 {% block jumbo %}
-<h1>Current List of Active Users.. test>> {{ owner }} </h1>
+<h1>Current List of Active Users</h1>
 {% endblock jumbo %}
 
 {% block sidebar %}
-  <!-- <div class="list-group">
-    <a href="#" class="list-group-item">Add a Friend</a>
-    <a href="#" class="list-group-item">Find a Friend</a>
-    <a href="#" class="list-group-item active">View Active Users</a>
-  </div> -->
 
 <div class="list-group">
   <a href="{% url 'addpodcast' %}" class="list-group-item">Add a Podcast</a>
   <!-- <a href="#" class="list-group-item">Find a Random Podcast</a> -->
-  <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
-  <!-- <a href="{% url 'updatefriends' pk=request.user.pk %}" class="list-group-item">View Friendslist</a> -->
+  <a href="{% url 'userlist' %}" class="list-group-item active">View Active Users</a>
+  <a href="{% url 'friendlist' pk=request.user.pk %}" class="list-group-item">View Friendslist</a>
   {% if owner %}
   <form method="GET" action="{% url 'dashboard_with_pk' pk=owner.pk %}">
   {% else %}
@@ -33,6 +28,7 @@
       </div><!-- /input-group -->
     </form>
  </div>
+ 
 {% endblock sidebar %}
 
 {% block content %}

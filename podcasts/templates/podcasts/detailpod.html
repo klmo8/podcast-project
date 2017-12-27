@@ -11,9 +11,25 @@
   {% if request.user != object.user %}
   <a href="{% url 'addthispodcast' pk=object.pk %}" class="list-group-item">Add this Podcast</a>
   {% endif %}
-  <!-- <a href="{% url 'updatefriends' pk=request.user.pk %}" class="list-group-item">View Friendslist</a> -->
   <a href="{% url 'userlist' %}" class="list-group-item">View Active Users</a>
-</div>
+  <a href="{% url 'friendlist' pk=request.user.pk %}" class="list-group-item">View Friendslist</a>
+  {% if owner %}
+  <form method="GET" action="{% url 'dashboard_with_pk' pk=owner.pk %}">
+  {% else %}
+  <form method="GET" action="{% url 'dashboard_with_pk' pk=user.pk %}">
+  {% endif %}
+      <div class="input-group">
+        {% if flag == 1 %}
+        <input type="text" class="form-control" name="q" placeholder="User not found. Please try again."></b>
+        {% else %}
+        <input type="text" class="form-control" name="q" placeholder="Search for a friend">
+        {% endif %}
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">Go!</button>
+        </span>
+      </div><!-- /input-group -->
+    </form>
+  </div>
 {% endblock sidebar %}
 <!-- "{% url 'details_with_pk' pk=pod.pk %}" -->
 
