@@ -167,6 +167,7 @@ class UserListView(LoginRequiredMixin, LookupUserMixin, ListView):
         queryset = User.objects.all()
         return queryset
 
+
 # Credit to Max Goodridge (https://www.youtube.com/watch?v=Fc2O3_2kax8&list=PLw02n0FEB3E3VSHjyYMcFadtQORvl1Ssj).
 # The below code for friendships was adapted from his Django tutorial series on YouTube.
 def update_friends(request, operation, pk):
@@ -182,7 +183,6 @@ def update_friends(request, operation, pk):
         Friend.unfriend(request.user, friend)
         messages.success(request, 'User successfully removed from Friendlist')
 
-    # return redirect('friendlist', args=[request.user.pk])
     return HttpResponseRedirect(reverse('friendlist', args=[request.user.pk]))
 
 
@@ -194,21 +194,13 @@ class FriendListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
         queryset = friend.users.all()
         return queryset
 
-
-def search_user(request):
-
-    #if searchterm is found, then redirect to dashboard with pk where pk is found user
-    #if searchterm not found, then redirect to friendlist with is_found = false (which causes "user not found" message)
-    searchterm = request.GET.get("q")
-    if searchterm:
-        lookup = User.objects.filter(username__iexact=searchterm)
-    print(searchterm)
-    print(lookup)
-    if searchterm and not lookup:
-        messages.success(request, "User not found. Please try again.")
-        return HttpResponseRedirect(reverse('friendlist', args=[request.user.pk]))
-    elif searchterm and lookup:
-        pk = lookup[0].pk
-        return HttpResponseRedirect(reverse('dashboard_with_pk', args=[pk]))
-    else:
-        return HttpResponseRedirect(reverse('friendlist', args=[request.user.pk]))
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context.
+        # Add additional context to be passed through to the template.
+        context = super(FriendListView, self).get_context_data(**kwargs)
+        context['flag'] = False
+        friend = Friend.objects.get(current_user=self.request.user)
+        queryset = friend.users.all()
+        if queryset:
+            context['flag'] = True
+        return context

@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-# from django.contrib.auth.views import LoginView
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
@@ -39,12 +38,7 @@ urlpatterns = [
     url(r'^podcom/users/$', UserListView.as_view(), name='userlist'),
     url(r'^podcom/updatefriends/(?P<operation>.+)/(?P<pk>\d+)/$', views.update_friends, name='updatefriends'),
     url(r'^podcom/friendlist/(?P<pk>\d+)/$', FriendListView.as_view(), name='friendlist'),
-    url(r'^podcom/searchuser/$', views.search_user, name='searchuser'),
+    # url(r'^podcom/searchuserlist/$', views.search_userlist, name='searchuserlist'),
+    # url(r'^podcom/searchfriendlist/$', views.search_friendlist, name='searchfriendlist'),
 
-
-
-    # url(r'^podcom/mycom/viewfriend/$', TemplateView.as_view(template_name='friendpage.html')),
-    # url(r'^podcom/mycom/add/$', TemplateView.as_view(template_name='addfriend.html')),
-    # url(r'^podcom/mycom/delete/$', TemplateView.as_view(template_name='deletefriend.html')),
-    # url(r'^podcom/mycom/details/$', TemplateView.as_view(template_name='fdetailpod.html')),
 ]

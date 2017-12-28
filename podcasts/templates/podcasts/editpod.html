@@ -19,8 +19,7 @@
   <div class="col-md-10 crispyform">
     <form method="POST">{% csrf_token %}
       {{ form|crispy }}
-      <!-- {{ form.as_p }} -->
-      <p>* indicates a mandatory field</p>
+      <a href="{% url 'details_with_pk' pk=object.pk %}" class="btn btn-danger" role="button">Cancel</a>
       <input class="btn btn-primary" type="submit" value="Submit">
     </form>
   </div>

@@ -19,7 +19,6 @@
   <div class="col-md-10 crispyform">
     <form method="POST">{% csrf_token %}
       {{ form|crispy }}
-      <p>* indicates a mandatory field</p>
       <input class="btn btn-primary" type="submit" value="Submit">
     </form>
   </div>
