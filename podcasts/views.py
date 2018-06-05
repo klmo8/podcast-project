@@ -78,15 +78,6 @@ class PodcastListViewPK(LoginRequiredMixin, LookupUserMixin, ListView):
 
         return context
 
-# class PodcastListView(LoginRequiredMixin, ListView):
-#     template_name = 'podcasts/dashboard.html'
-#     redirect_field_name = 'redirect_to'
-#
-#
-#     def get_queryset(self):
-#         queryset = Podcast.objects.filter(user=self.request.user)
-#         return queryset
-
 
 class PodcastDetailView(LoginRequiredMixin, DetailView):
     template_name = 'podcasts/detailpod.html'
