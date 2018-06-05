@@ -57,13 +57,15 @@ class PodcastListViewPK(LoginRequiredMixin, LookupUserMixin, ListView):
         context['owner'] = User.objects.get(pk=pk)
 
         # Get friendslist to determine whether or not to display 'Add user to Friendslist' button
-        friend = Friend.objects.get(current_user=self.request.user.pk)
-        if friend:
+        try:
+            friend = Friend.objects.get(current_user=self.request.user.pk)
             friends = friend.users.all()
             context['is_friend'] = False
             for friend in friends:
                 if friend == User.objects.get(pk=pk):
                     context['is_friend'] = True
+        except Friend.DoesNotExist:
+            pass
         return context
 
 class PodcastListView(LoginRequiredMixin, ListView):
