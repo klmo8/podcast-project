@@ -60,7 +60,7 @@ class PodcastListViewPK(LoginRequiredMixin, LookupUserMixin, ListView):
 
         # Set flag for new user if no podcasts associated with user
         podcasts = Podcast.objects.filter(user=self.request.user.pk)
-        if not pocasts:
+        if not podcasts:
             context['is_podcasts'] = False
         else:
             context['is_podcasts'] = True
