@@ -38,6 +38,8 @@ class PodcastListViewPK(LoginRequiredMixin, LookupUserMixin, ListView):
         else:
             pk = self.kwargs.get("pk")
         queryset = Podcast.objects.filter(user=pk)
+        if not queryset:
+            queryset = Podcast.objects.all()
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -68,14 +70,14 @@ class PodcastListViewPK(LoginRequiredMixin, LookupUserMixin, ListView):
             pass
         return context
 
-class PodcastListView(LoginRequiredMixin, ListView):
-    template_name = 'podcasts/dashboard.html'
-    redirect_field_name = 'redirect_to'
-
-
-    def get_queryset(self):
-        queryset = Podcast.objects.filter(user=self.request.user)
-        return queryset
+# class PodcastListView(LoginRequiredMixin, ListView):
+#     template_name = 'podcasts/dashboard.html'
+#     redirect_field_name = 'redirect_to'
+#
+#
+#     def get_queryset(self):
+#         queryset = Podcast.objects.filter(user=self.request.user)
+#         return queryset
 
 
 class PodcastDetailView(LoginRequiredMixin, DetailView):
