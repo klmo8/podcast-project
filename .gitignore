@@ -3,7 +3,6 @@ podcom/settings/local2.py
 .DS_Store
 runtime.txt
 
-
 bin/
 include/
 pip-selfcheck.json
