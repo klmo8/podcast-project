@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '#x-l6p_a4-2x=%(8vk&&3b+9yn-_#3*t5=7-&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['peaceful-island-88886.herokuapp.com']
+ALLOWED_HOSTS = ['podcom.herokuapp.com']
 
 
 # Application definition
