@@ -1,0 +1,29 @@
+.error {
+  font-weight: bold;
+  color: black;
+  font-size: 1.5em;
+}
+
+.success {
+  font-weight: bold;
+  color: green;
+  font-size: 1.5em;
+}
+
+body {
+  background-color: #F63;
+}
+
+.jumbotron {
+  /*font-family: 'Alfa Slab One', cursive;*/
+  font-family: 'Kanit', sans-serif;
+  max-width: 100%;
+}
+
+.detailsButton {
+  margin-top: 10px;
+}
+
+.mic-logo {
+  min-width: 240px;
+}

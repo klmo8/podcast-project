@@ -1,0 +1,12 @@
+body {
+  background-color: #F63;
+}
+
+.jumbotron {
+  /*font-family: 'Alfa Slab One', cursive;*/
+  visibility: hidden;
+}
+
+#sidebar {
+  visibility: hidden;
+}

@@ -1,0 +1,28 @@
+.error {
+  font-weight: bold;
+  color: red;
+}
+
+.success {
+  font-weight: bold;
+  color: green;
+}
+
+body {
+  /*background-image: url('gradient-red-simple-background-705766-2048x1536.jpg');*/
+  background-color: #F63;
+}
+
+.jumbotron {
+  /*font-family: 'Alfa Slab One', cursive;*/
+  font-family: 'Kanit', sans-serif;
+  max-width: 100%;
+}
+
+.detailsButton {
+  margin-top: 10px;
+}
+
+.mic-logo {
+  min-width: 240px;
+}

@@ -1,0 +1,33 @@
+body {
+  background-color: #F63;
+}
+
+.jumbotron {
+  /*font-family: 'Alfa Slab One', cursive;*/
+  font-family: 'Kanit', sans-serif;
+}
+
+.pod-logo {
+  width: 150px;
+  height: 150px;
+}
+
+/*#sidebar {
+  visibility: hidden;
+}*/
+
+.crispyform {
+  margin-left: 5px;
+}
+
+.error {
+  font-weight: bold;
+  color: black;
+  font-size: 1.5em;
+}
+
+.success {
+  font-weight: bold;
+  color: green;
+  font-size: 1.5em;
+}

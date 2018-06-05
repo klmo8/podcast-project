@@ -1,6 +1,5 @@
 podcom/settings/local.py
 podcom/settings/local2.py
-live-static-files/
 .DS_Store
 runtime.txt
 
