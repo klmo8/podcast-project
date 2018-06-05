@@ -24,6 +24,7 @@ from django.views.generic import View, TemplateView, DetailView, ListView, Creat
 urlpatterns = [
     # reverse_lazy tells the app to redirect to the page named 'login' after a user logs out.
     # as_view() is a method that creates an instance of this class.
+    url(r'^$', home, name='home'),
     url(r'^podcom/$', home, name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^podcom/(?P<pk>\d+)/$', PodcastListViewPK.as_view(), name='dashboard_with_pk'),
