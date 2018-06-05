@@ -193,17 +193,23 @@ class FriendListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
     template_name = 'podcasts/friendlist.html'
 
     def get_queryset(self):
-        friend = Friend.objects.get(current_user=self.request.user)
-        queryset = friend.users.all()
-        return queryset
+        try:
+            friend = Friend.objects.get(current_user=self.request.user)
+            queryset = friend.users.all()
+            return queryset
+        except Friend.DoesNotExist:
+            pass
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context.
         # Add additional context to be passed through to the template.
         context = super(FriendListView, self).get_context_data(**kwargs)
         context['flag'] = False
-        friend = Friend.objects.get(current_user=self.request.user)
-        queryset = friend.users.all()
-        if queryset:
-            context['flag'] = True
-        return context
+        try:
+            friend = Friend.objects.get(current_user=self.request.user)
+            queryset = friend.users.all()
+            if queryset:
+                context['flag'] = True
+            return context
+        except Friend.DoesNotExist:
+            pass
