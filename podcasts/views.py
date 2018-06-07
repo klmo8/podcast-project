@@ -38,7 +38,7 @@ class PodcastListViewPK(LoginRequiredMixin, LookupUserMixin, ListView):
             pk = result[0].pk
         else:
             pk = self.kwargs.get("pk")
-            queryset = Podcast.objects.filter(user=pk)
+        queryset = Podcast.objects.filter(user=pk)
         pk = int(pk)
         user_pk = int(user_pk)
         if not queryset and pk == user_pk:
