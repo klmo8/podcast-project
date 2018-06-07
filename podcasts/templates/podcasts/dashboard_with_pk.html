@@ -4,7 +4,11 @@
 {% block jumbo %}
 {% if owner == request.user %}
   <h1>Your Shared Podcasts</h1>
-  <p>This is a list of your top shared podcasts. What you see here is what other users will see when they visit your page.</p>
+  {% if is_podcasts %}
+    <p>This is a list of your top shared podcasts. What you see here is what other users will see when they visit your page.</p>
+  {% else %}
+    <p>You are not currently sharing any podcasts. Add a new podcast below or choose from the list of popular choices.</p>
+  {% endif %}
 {% else %}
   {% if object_list %}
     <h1>{{ owner }}'s Shared Podcasts</h1>
@@ -22,8 +26,6 @@
   {% endif %}
 {% endif %}
 {% endblock jumbo %}
-
-
 
 
 {% block sidebar %}
@@ -62,8 +64,9 @@
   {% if not owner == request.user %}
     <p><a class="btn btn-default" href="{% url 'userlist' %}" role="button">Return to list of users &raquo;</a></p>
   {% elif owner == request.user and not is_podcasts %}
-    <p><a class="btn btn-default" href="{% url 'addpodcast' %}" role="button">Add a Podcast &raquo;</a></p>
-    <h3>Or choose from one of these popular podcasts...</h3>
+    <p><a class="btn btn-primary btn-lg" href="{% url 'addpodcast' %}" role="button">Add a New Podcast &raquo;</a></p>
+    <hr>
+    <h2>Trending podcasts you may be interested in</h2>
   {% endif %}
   {% for pod in podcast_list %}
     <div class="{% cycle "col-md-3 content-left text-center" "col-md-3 content-midl text-center" "col-md-3 content-midr text-center" "col-md-3 content-right text-center" %}">
