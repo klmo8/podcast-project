@@ -25,12 +25,13 @@ Please view the included requirements.txt to view the list of dependencies requi
 * [Django]
 * [Python]
 * [Crispy Forms]
+* [Bootstrap]
+* [iTunes API]
 
 ## Authors
 
 * **Kyle Moss**
 
-
 ## Acknowledgments
 
-* Thanks to GoDjango and CodingForEntrepreneurs for providing useful Django tutorials on YouTube.
+* Thanks to GoDjango and CodingForEntrepreneurs for providing useful Django videos on YouTube.
