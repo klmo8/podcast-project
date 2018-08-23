@@ -25,13 +25,13 @@ class PodcastAddForm(forms.ModelForm):
             'title',
             'description',
             'url',
-            'logo',
+            # 'logo',
             'favorite_episode',
             'saved_clip',
             'shownotes',
         ]
         labels = {
-            'logo': 'Link to iTunes Coverart',
+            # 'logo': 'Link to iTunes Coverart',
             'url': 'Homepage',
         }
 

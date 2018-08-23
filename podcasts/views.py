@@ -12,6 +12,7 @@ from django.core.exceptions import PermissionDenied
 from .models import *
 from .forms import *
 from .mixins import *
+import requests
 
 
 # Workaround to redirect users to their personal dashboard after successfully logging in.
@@ -99,8 +100,18 @@ class PodcastAddView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     template_name = 'podcasts/addpod.html'
     success_message = "Podcast successfully added"
 
+
     # Saves the valid form with the current user being associated with the saved form data.
     def form_valid(self, form):
+        # Get podcast title to make API call with
+        url = "https://itunes.apple.com/search?media=podcast&limit=1&term={}"
+        title = self.request.POST.get("title")
+        r = requests.get(url.format(title)).json()
+        if r["resultCount"] > 0:
+            # Set the retrieved artwork as the artwork for the newly added podcast
+            artworkUrl = (r["results"][0]["artworkUrl600"])
+            form.instance.logo = artworkUrl
+
         instance = form.save(commit=False)
         instance.user = self.request.user
         return super(PodcastAddView, self).form_valid(form)

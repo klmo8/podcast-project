@@ -13,7 +13,7 @@
   {% for pod in podcast_list %}
       <h2>{{ pod.title|title }}</h2>
       {% if pod.logo %}
-        <img class="pod-logo" src="{{ pod.logo }}">
+        <img class="pod-logo" src="{{ pod.logo }}" height="170" width="170">
       {% endif %}
       <p><a class="btn btn-default detailsButton" href="{% url 'details_with_pk' pk=pod.pk %}" role="button">View details &raquo;</a></p>
   {% endfor %}
