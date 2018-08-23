@@ -9,7 +9,11 @@ A place for podcast lovers to share their favorite podcasts and find new ones to
 
 ## Description
 
-This project was used as a means to familiarize myself with the Django framework. This project builds on my previous Django project by utilizing Class-Based Views rather than Function-Based Views. It also includes user registration/authorization, login/logout functionality, permissions, more advanced querying, and a richer set of features available to the user. Please note this is a work in progress: more advanced features will be added with time. In particular, I'd like to pull podcast data (coverart images, in particular) directly from iTunes. I also plan to implement a "friending" feature in the very near future, so that users can follow specified users.
+This project was used as a means to familiarize myself with the Django framework. This project builds on my previous Django project by utilizing Class-Based Views rather than Function-Based Views. It also includes user registration/authorization, login/logout functionality, permissions, more advanced querying, and a richer set of features available to the user. In addition, I have now added
+dynamic retrieval of relevant podcast information via the iTunes API.
+
+Please note this is a work in progress: more advanced features will be added with time. Priorities have shifted to other projects but
+I am adding occasional updates as I learn about new things that can be easily added.
 
 ### Prerequisites
 
