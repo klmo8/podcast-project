@@ -2,6 +2,10 @@
 
 <img width="1146" alt="screen shot 2017-09-19 at 6 29 57 pm" src="https://user-images.githubusercontent.com/18518784/30622840-12e5f400-9d69-11e7-8fb9-de30b09dcb9f.png">
 
+<img width="1920" alt="screen shot 2018-09-04 at 12 07 50 pm" src="https://user-images.githubusercontent.com/18518784/45052399-87a38600-b03b-11e8-95ff-d631d5afb441.png">
+
+<img width="1919" alt="screen shot 2018-09-04 at 12 08 40 pm" src="https://user-images.githubusercontent.com/18518784/45052447-b02b8000-b03b-11e8-9d09-af325586ac2d.png">
+
 
 # PodCom Podcast Sharing App  
 
