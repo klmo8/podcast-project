@@ -1,7 +1,5 @@
 <img width="1147" alt="screen shot 2017-09-19 at 6 29 34 pm" src="https://user-images.githubusercontent.com/18518784/30622839-10123fd6-9d69-11e7-8624-23b4609fb01c.png">
 
-<img width="1146" alt="screen shot 2017-09-19 at 6 29 57 pm" src="https://user-images.githubusercontent.com/18518784/30622840-12e5f400-9d69-11e7-8fb9-de30b09dcb9f.png">
-
 <img width="1288" alt="screen shot 2018-09-04 at 12 13 46 pm" src="https://user-images.githubusercontent.com/18518784/45052557-08628200-b03c-11e8-9fb6-f1f07e7c7bf3.png">
 
 <img width="1238" alt="screen shot 2018-09-04 at 12 13 18 pm" src="https://user-images.githubusercontent.com/18518784/45052560-0993af00-b03c-11e8-9b1f-821714fb2431.png">
