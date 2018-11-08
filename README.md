@@ -6,15 +6,13 @@
 
 <img width="1307" alt="screen shot 2018-09-04 at 12 23 41 pm" src="https://user-images.githubusercontent.com/18518784/45053044-ae62bc00-b03d-11e8-88c7-ffeb32692653.png">
 
-
 # PodCom Podcast Sharing App  
 
 A place for podcast lovers to share their favorite podcasts and find new ones to follow.
 
 ## Description
 
-This project was used as a means to familiarize myself with the Django framework. This project builds on my previous Django project by utilizing Class-Based Views rather than Function-Based Views. It also includes user registration/authorization, login/logout functionality, permissions, more advanced querying, and a richer set of features available to the user. In addition, I have now added
-dynamic retrieval of relevant podcast information via the iTunes API.
+Creating this project has helped me learn the Django framework. This project builds on my previous Django project by utilizing Class-Based Views rather than Function-Based Views. It also includes user registration/authorization, login/logout functionality, permissions, more advanced querying, and a richer set of features available to the user. Also, podcast details are dynamically retrieved via the iTunes API.
 
 Please note this is a work in progress: more advanced features will be added with time. Priorities have shifted to other projects but
 I am adding occasional updates as I learn about new things that can be easily added.
@@ -22,7 +20,6 @@ I am adding occasional updates as I learn about new things that can be easily ad
 ### Prerequisites
 
 Please view the included requirements.txt to view the list of dependencies required to run the app.
-
 
 ## Built With
 
