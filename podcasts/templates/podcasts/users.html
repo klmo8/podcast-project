@@ -16,12 +16,12 @@
 {% endblock sidebar %}
 
 {% block content %}
-<h3>Select a user to view their shared podcasts</h3>
-  <div class="well">
-    <ul>
+<!-- <h3>Select a user to view their shared podcasts</h3> -->
+  <div class="well" >
+    <ul class="list-group">
     {% for obj in object_list %}
       <a href="{% url 'dashboard_with_pk' pk=obj.pk %}">
-        <li><h4>{{ obj.username }}</h4></li>
+        <li class="list-group-item"><h4>{{ obj.username }}</h4></li>
       </a>
     {% endfor %}
     </ul>
