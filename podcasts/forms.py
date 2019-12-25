@@ -92,6 +92,7 @@ class RegisterUserForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
+        # call the parent's (forms.modelForm) save method
         user = super(RegisterUserForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:

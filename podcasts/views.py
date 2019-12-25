@@ -20,6 +20,7 @@ import requests
 def home(request):
     return HttpResponseRedirect(reverse('dashboard_with_pk', args=[request.user.pk]))
 
+
 class RegisterView(CreateView):
     form_class = RegisterUserForm
     template_name = 'registration/register.html'
@@ -100,8 +101,8 @@ class PodcastAddView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     template_name = 'podcasts/addpod.html'
     success_message = "Podcast successfully added"
 
-
     # Saves the valid form with the current user being associated with the saved form data.
+
     def form_valid(self, form):
         # Get podcast title to make API call with
         url = "https://itunes.apple.com/search?media=podcast&limit=1&term={}"
@@ -121,21 +122,23 @@ class PodcastAddView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 def add_this_podcast(request, *args, **kwargs):
 
     # Get the pk of the podcast to be added (passed via kwargs) and then get that object from the Model
-    # NOT SURE IF NEEDED: user_pk = request.user.pk
     pk = kwargs.get('pk')
     obj = get_object_or_404(Podcast, id=pk)
 
     # Check if podcast already exists in this user's database
     exists = Podcast.objects.filter(user=request.user, title=obj.title)
     if (exists):
-        messages.error(request, 'The selected podcast was not added because it already exists in your list')
+        messages.error(
+            request, 'The selected podcast was not added because it already exists in your list')
     else:
         messages.success(request, 'Podcast successfully added')
         # Save relevant information retrieved from model to current user
-        podcast = Podcast.objects.create(user=request.user, title=obj.title, description=obj.description, url=obj.url, logo=obj.logo)
+        podcast = Podcast.objects.create(
+            user=request.user, title=obj.title, description=obj.description, url=obj.url, logo=obj.logo)
         podcast.save()
     # Redirect to dashboard
     return HttpResponseRedirect(reverse('dashboard_with_pk', args=[request.user.pk]))
+
 
 class PodcastUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PodcastUpdateForm
@@ -146,13 +149,14 @@ class PodcastUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, *args, **kwargs):
         # Gets the context that is being passed by default to this view.
-        context = super(PodcastUpdateView, self).get_context_data(*args, **kwargs)
+        context = super(PodcastUpdateView, self).get_context_data(
+            *args, **kwargs)
         return context
 
     def get_object(self, *args, **kwargs):
         obj = super(PodcastUpdateView, self).get_object(*args, **kwargs)
         if obj.user != self.request.user:
-            raise PermissionDenied() #or Http404
+            raise PermissionDenied()  # or Http404
         return obj
 
     # Saves the valid form with the current user being associated with the saved form data
@@ -160,6 +164,7 @@ class PodcastUpdateView(LoginRequiredMixin, UpdateView):
         instance = form.save(commit=False)
         instance.user = self.request.user
         return super(PodcastUpdateView, self).form_valid(form)
+
 
 class PodcastDeleteView(LoginRequiredMixin, DeleteView):
     form_class = PodcastDeleteForm
@@ -178,6 +183,7 @@ class PodcastDeleteView(LoginRequiredMixin, DeleteView):
         instance.user = self.request.user
         return super(PodcastDeleteView, self).form_valid(form)
 
+
 class UserListView(LoginRequiredMixin, LookupUserMixin, ListView):
     template_name = 'podcasts/users.html'
 
@@ -187,7 +193,7 @@ class UserListView(LoginRequiredMixin, LookupUserMixin, ListView):
 
 
 # Credit to Max Goodridge (https://www.youtube.com/watch?v=Fc2O3_2kax8&list=PLw02n0FEB3E3VSHjyYMcFadtQORvl1Ssj).
-# The below code for friendships was adapted from his Django tutorial series on YouTube.
+# The below code for friendships was adapted from his Django tutorial series.
 def update_friends(request, operation, pk):
 
     friend = User.objects.get(pk=pk)
